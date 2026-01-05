@@ -1,8 +1,7 @@
 {
-  "name": "tax-care-group-vita",
-  "private": true,
+  "name": "taxcare-vita",
   "version": "1.0.0",
-  "type": "module",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -11,11 +10,14 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.3",
-    "lucide-react": "^0.344.0"
+    "react-router-dom": "^6.15.0",
+    "lucide-react": "^0.264.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.1.4"
+    "vite": "^4.4.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "tailwindcss": "^3.3.3",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0"
   }
 }
