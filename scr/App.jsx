@@ -1,16 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Layout from './layout';
-import Home from './pages/Home';
 
 export default function App() {
   return (
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-      </Layout>
-    </Router>
+    <div className="text-center mt-20">
+      <h1 className="text-3xl font-bold text-emerald-600">
+        Tax Care VITA is live!
+      </h1>
+    </div>
   );
 }
