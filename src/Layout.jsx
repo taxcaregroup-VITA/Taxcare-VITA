@@ -24,7 +24,7 @@ export default function Layout({ children }) {
       {/* Footer */}
       <footer className="bg-gray-900 text-gray-300">
         <div className="max-w-7xl mx-auto px-6 py-8 text-sm text-center">
-          © {new Date().getFullYear()} Tax Care Group VITA
+          © 2024 Taxcare Group, Inc.
         </div>
       </footer>
     </div>
