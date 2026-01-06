@@ -5,7 +5,7 @@ export default function Layout({ children }) {
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <h1 className="text-xl font-bold text-emerald-600">
-            Tax Care VITA
+            Taxcare Group 
           </h1>
           <nav className="space-x-4 text-sm">
             <a href="#" className="text-gray-700 hover:text-emerald-600">Home</a>
