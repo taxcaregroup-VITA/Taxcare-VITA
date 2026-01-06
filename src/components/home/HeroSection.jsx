@@ -1,14 +1,23 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-
-export default function HeroSection({ t }) {
+export default function HeroSection() {
   return (
-    <section className="bg-emerald-600 text-white py-20">
-      <div className="max-w-7xl mx-auto px-6 text-center">
-        <h1 className="text-4xl sm:text-5xl font-bold mb-6">{t('heroTitle')}</h1>
-        <p className="text-lg sm:text-xl mb-8">{t('heroSubtitle')}</p>
-        <Button className="bg-white text-emerald-600 hover:bg-gray-100">{t('getStarted')}</Button>
+    <section className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
+      <div className="max-w-7xl mx-auto px-6 py-24 text-center">
+        <h1 className="text-5xl font-bold mb-6">
+          Free, IRS-Certified Tax Help
+        </h1>
+
+        <p className="text-xl max-w-3xl mx-auto mb-10">
+          Get your taxes done safely and accurately by trained volunteers —
+          completely free.
+        </p>
+
+        <a
+          href="#"
+          className="inline-block bg-white text-emerald-600 font-semibold px-8 py-4 rounded-lg hover:bg-gray-100 transition"
+        >
+          Get Started
+        </a>
       </div>
     </section>
-  );
+  )
 }
