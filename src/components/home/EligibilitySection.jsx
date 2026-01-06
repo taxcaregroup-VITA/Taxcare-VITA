@@ -1,27 +1,33 @@
-// src/components/home/EligibilitySection.jsx
-import React from 'react';
-import { Check } from 'lucide-react';
+import { Check } from 'lucide-react'
 
-export default function EligibilitySection({ t }) {
-  const eligibilityItems = [
-    t('eligibilityItem1') || 'Must have earned income',
-    t('eligibilityItem2') || 'Must be a U.S. resident',
-    t('eligibilityItem3') || 'Cannot exceed income limits',
-  ];
+export default function EligibilitySection() {
+  const items = [
+    'Household income generally under $70,000',
+    'Families and dependents',
+    'Self-employed with simple returns',
+    'First-time filers',
+    'Seniors and retirees',
+  ]
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold mb-10">{t('eligibilityTitle') || 'Eligibility Requirements'}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {eligibilityItems.map((item, idx) => (
-            <div key={idx} className="flex items-start gap-3 p-4 border rounded-lg hover:shadow-lg transition">
-              <Check className="h-6 w-6 text-emerald-500 mt-1" />
-              <p className="text-gray-700">{item}</p>
+    <section className="bg-white">
+      <div className="max-w-7xl mx-auto px-6 py-20">
+        <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">
+          Who Is Eligible?
+        </h2>
+
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          {items.map((item, index) => (
+            <div
+              key={index}
+              className="flex items-start gap-3 bg-gray-50 p-4 rounded-lg"
+            >
+              <Check className="h-5 w-5 text-emerald-600 mt-1" />
+              <span className="text-gray-700">{item}</span>
             </div>
           ))}
         </div>
       </div>
     </section>
-  );
+  )
 }
