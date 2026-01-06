@@ -2,11 +2,12 @@ import { Check } from 'lucide-react'
 
 export default function EligibilitySection() {
   const items = [
-    'Household income generally under $70,000',
-    'Families and dependents',
-    'Self-employed with simple returns',
-    'First-time filers',
+    'Household income generally under $67,000',
+    'Valid SSN or ITIN',
+    'Persons with disabilities',
+    'Limited English-speaking taxpayers',
     'Seniors and retirees',
+    
   ]
 
   return (
