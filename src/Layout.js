@@ -1,9 +1,19 @@
+const pageRoutes = {
+  Home: '/',
+  About: '/about',
+  FAQ: '/faq',
+  Contact: '/contact',
+  Privacy: '/privacy',
+  GetStarted: '/get-started',
+  Schedule: '/schedule',
+};
+
 const navItems = [
-  { name: t('home'), page: 'Home' },
-  { name: t('getStarted'), page: 'GetStarted' },
-  { name: t('scheduleAppointment'), page: 'Schedule' },
-  { name: t('faq'), page: 'FAQ' },
-  { name: t('aboutUs'), page: 'About' },
-  { name: t('privacyPolicy'), page: 'Privacy' },
-  { name: t('contact'), page: 'Contact' },
+  { name: 'Home', page: 'Home' },
+  { name: 'Get Started', page: 'GetStarted' },
+  { name: 'Schedule', page: 'Schedule' },
+  { name: 'FAQ', page: 'FAQ' },
+  { name: 'About', page: 'About' },
+  { name: 'Privacy', page: 'Privacy' },
+  { name: 'Contact', page: 'Contact' },
 ];
