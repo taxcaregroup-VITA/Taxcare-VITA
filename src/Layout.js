@@ -1,25 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-// Page-to-route mapping
-const pageRoutes = {
-  Home: '/',
-  About: '/about',
-  FAQ: '/faq',
-  Contact: '/contact',
-  Privacy: '/privacy',
-  GetStarted: '/get-started',
-  Schedule: '/schedule',
-};
-
+// Navigation links
 const navItems = [
-  { name: 'Home', page: 'Home' },
-  { name: 'Get Started', page: 'GetStarted' },
-  { name: 'Schedule', page: 'Schedule' },
-  { name: 'FAQ', page: 'FAQ' },
-  { name: 'About', page: 'About' },
-  { name: 'Privacy', page: 'Privacy' },
-  { name: 'Contact', page: 'Contact' },
+  { name: 'Home', page: '/' },
+  { name: 'Get Started', page: '/get-started' },
+  { name: 'Schedule', page: '/schedule' },
+  { name: 'FAQ', page: '/faq' },
+  { name: 'About', page: '/about' },
+  { name: 'Privacy Policy', page: '/privacy' },
+  { name: 'Contact', page: '/contact' },
 ];
 
 export default function Layout({ children }) {
