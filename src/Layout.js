@@ -23,7 +23,6 @@ const navItems = [
 ];
 
 export default function Layout({ children }) {
-  // <-- Hooks go here
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -39,14 +38,13 @@ export default function Layout({ children }) {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-4">
             {navItems.map((item) => (
-             <Link
-  key={item.page}
-  to={item.page}
-  className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium"
->
-  {item.name}
-</Link>
-
+              <Link
+                key={item.page}
+                to={item.page}
+                className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                {item.name}
+              </Link>
             ))}
           </nav>
 
@@ -67,7 +65,7 @@ export default function Layout({ children }) {
             {navItems.map((item) => (
               <Link
                 key={item.page}
-                to={pageRoutes[item.page] || '/'}
+                to={item.page}
                 onClick={() => setMobileMenuOpen(false)}
                 className="block px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"
               >
@@ -78,8 +76,10 @@ export default function Layout({ children }) {
         )}
       </header>
 
-      {/* Main */}
-      <main className="flex-1">{children}</main>
+      {/* Main content */}
+      <main className="flex-1">
+        {children}
+      </main>
 
       {/* Footer */}
       <footer className="bg-gray-900 text-gray-300">
