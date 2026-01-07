@@ -9,7 +9,7 @@ const navItems = [
   { name: 'FAQ', page: '/faq' },
   { name: 'About', page: '/about' },
   { name: 'Privacy Policy', page: '/privacy' },
-  { name: 'Contact', page: '/contact' },
+  { name: 'Contact', page: '/contact' }
 ];
 
 export default function Layout({ children }) {
