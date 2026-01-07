@@ -39,13 +39,14 @@ export default function Layout({ children }) {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-4">
             {navItems.map((item) => (
-              <Link
-                key={item.page}
-                to={pageRoutes[item.page] || '/'}
-                className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                {item.name}
-              </Link>
+             <Link
+  key={item.page}
+  to={item.page}
+  className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium"
+>
+  {item.name}
+</Link>
+
             ))}
           </nav>
 
