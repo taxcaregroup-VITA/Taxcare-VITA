@@ -1,13 +1,19 @@
 export default function Schedule() {
   return (
-    <div className="max-w-5xl mx-auto px-6 py-20 text-center">
-      <h1 className="text-3xl font-bold mb-6">Schedule Your Tax Appointment</h1>
-      <p className="text-gray-700 mb-6">
-        Choose a convenient date and time to meet virtually with one of our IRS-certified volunteers.
+    <div className="max-w-3xl mx-auto px-6 py-20 space-y-8 text-center">
+      <h1 className="text-4xl font-bold text-gray-900 mb-4">Schedule an Appointment</h1>
+      <p className="text-gray-700 text-lg mb-6">
+        Choose a date and time that works best for you to meet with an IRS-certified VITA volunteer.
       </p>
-      <button className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-700">
-        Book Now
-      </button>
+      <p className="text-gray-700 text-lg">
+        (For now, this is a placeholder — we’ll add a scheduling form soon.)
+      </p>
+      <a
+        href="/get-started"
+        className="mt-6 inline-block bg-emerald-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-emerald-700 transition"
+      >
+        Back to Get Started
+      </a>
     </div>
-  )
+  );
 }
