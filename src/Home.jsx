@@ -59,4 +59,8 @@ export default function Home() {
           VITA services are generally available if you earn
           $67,000 or less, have a disability, or need language assistance.
         </p>
-        
+        </section>
+
+    </div>
+  );
+}
