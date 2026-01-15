@@ -1,5 +1,5 @@
-import EligibilitySection from './EligibilitySection';
-import TestimonialsSection from './TestimonialsSection';
+import EligibilitySection from './components/home/EligibilitySection';
+import TestimonialsSection from './components/home/TestimonialsSection';
 
 export default function Home() {
   return (
