@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import Layout from './Layout';
-import Home from './Home';
+import Home from './pages/Home';
 import About from './pages/About';
-import FAQ from './FAQ';
-import Contact from './Contact';
-import Privacy from './Privacy';
-import GetStarted from './GetStarted';
-import Schedule from './Schedule';
+import FAQ from './pages/FAQ';
+import Contact from './pages/Contact';
+import Privacy from './pages/Privacy';
+import GetStarted from './pages/GetStarted';
+import Schedule from './pages/Schedule';
 
 export default function App() {
   return (
