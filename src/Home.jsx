@@ -6,28 +6,29 @@ export default function Home() {
     <div className="max-w-7xl mx-auto px-6 py-20 space-y-32">
 
       {/* Hero Section */}
-      <section className="text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-          Free Virtual Tax Help
-        </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-          IRS-Certified VITA volunteers provide 100% free tax preparation — securely from your home.
-        </p>
-        <div className="flex justify-center gap-4">
-          <a
-            href="/get-started"
-            className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-700"
-          >
-            Get Started
-          </a>
-          <a
-            href="/faq"
-            className="border border-gray-300 px-6 py-3 rounded-lg font-medium text-gray-700 hover:bg-gray-50"
-          >
-            Learn More
-          </a>
-        </div>
-      </section>
+  <section className="text-center bg-gradient-to-b from-emerald-50 to-white py-20 rounded-xl shadow-sm">
+  <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 drop-shadow-sm">
+    Free Virtual Tax Help
+  </h1>
+  <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto mb-8">
+    IRS-Certified VITA volunteers provide 100% free tax preparation — securely from your home.
+  </p>
+  <div className="flex flex-col sm:flex-row justify-center gap-4">
+    <a
+      href="/get-started"
+      className="bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-emerald-700 shadow-md transition"
+    >
+      Get Started
+    </a>
+    <a
+      href="/faq"
+      className="border border-gray-300 px-8 py-4 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 transition"
+    >
+      Learn More
+    </a>
+  </div>
+</section>
+
 
       {/* Features / Trust Section */}
       <section className="grid md:grid-cols-3 gap-8 text-center">
