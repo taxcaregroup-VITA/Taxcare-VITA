@@ -1,15 +1,15 @@
 export default function About() {
   return (
-    <div className="max-w-5xl mx-auto px-6 py-20">
-      <h1 className="text-3xl font-bold mb-6">About Tax Care VITA</h1>
-      <p className="text-gray-700 mb-4">
-        Tax Care VITA provides free, virtual tax preparation services to eligible individuals,
-        leveraging IRS-certified volunteers to ensure your tax filing is accurate and secure.
+    <div className="max-w-4xl mx-auto px-6 py-20 space-y-8">
+      <h1 className="text-4xl font-bold text-gray-900 mb-4">About Tax Care VITA</h1>
+      <p className="text-gray-700 text-lg">
+        Taxcare Group provides free tax preparation services for eligible individuals and families, 
+        staffed by IRS-certified volunteers. Our mission is to make tax filing safe, easy, and accessible from home.
       </p>
-      <p className="text-gray-700">
-        Our mission is to make tax assistance accessible from the comfort of your home,
-        with guidance tailored to your situation.
+      <p className="text-gray-700 text-lg">
+        We focus on helping low-to-moderate income taxpayers, seniors, persons with disabilities, 
+        and those who need language assistance.
       </p>
     </div>
-  )
+  );
 }
