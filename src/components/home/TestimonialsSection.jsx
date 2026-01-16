@@ -1,45 +1,40 @@
+import React from "react";
+
 export default function TestimonialsSection() {
   const testimonials = [
     {
-      name: 'Maria R.',
-      quote:
-        'The volunteers were incredibly helpful. I filed my taxes from home and paid nothing.',
+      quote: "Amazing service! I filed my taxes from home and it was so easy.",
+      name: "Sarah M.",
     },
     {
-      name: 'James L.',
-      quote:
-        'Fast, secure, and professional. I finally understand my tax return.',
+      quote: "The volunteers were patient and explained everything clearly.",
+      name: "Jamal R.",
     },
     {
-      name: 'Angela T.',
-      quote:
-        'As a first-time filer, this service made everything stress-free.',
+      quote: "100% free and completely virtual — exactly what I needed!",
+      name: "Maria L.",
     },
-  ]
+  ];
 
   return (
-    <section className="bg-gray-50">
-      <div className="max-w-7xl mx-auto px-6 py-20">
-        <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-          What Clients Are Saying
+    <section className="bg-white py-20">
+      <div className="max-w-6xl mx-auto px-6 text-center">
+        <h2 className="text-3xl font-bold text-gray-900 mb-12">
+          What Our Clients Say
         </h2>
 
         <div className="grid md:grid-cols-3 gap-8">
           {testimonials.map((t, index) => (
             <div
               key={index}
-              className="bg-white p-6 rounded-lg shadow-sm"
+              className="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition"
             >
-              <p className="text-gray-700 mb-4">
-                “{t.quote}”
-              </p>
-              <p className="text-sm font-semibold text-emerald-600">
-                — {t.name}
-              </p>
+              <p className="text-gray-600 mb-4">“{t.quote}”</p>
+              <p className="font-semibold text-gray-900">— {t.name}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }
