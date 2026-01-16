@@ -1,3 +1,8 @@
+import SectionFade from '../ui/SectionFade'
+
+export default function EligibilitySection() {
+  return (
+    <SectionFade>
 import { Check } from 'lucide-react'
 
 export default function EligibilitySection() {
@@ -30,5 +35,7 @@ export default function EligibilitySection() {
         </div>
       </div>
     </section>
+
+  </SectionFade>
   )
 }
