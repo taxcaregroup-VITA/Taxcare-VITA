@@ -6,12 +6,13 @@ import SignUpSection from '../components/home/SignUpSection'
 
 export default function Home() {
   return (
-    <>
-      <HeroSection />
-      <BenefitsSection />
-      <EligibilitySection />
-      <TestimonialsSection />
-      <SignUpSection />
-    </>
+    <div className="space-y-24">
+  <HeroSection />
+  <BenefitsSection />
+  <EligibilitySection />
+  <TestimonialsSection />
+  <SignUpSection />
+</div>
+
   )
 }
