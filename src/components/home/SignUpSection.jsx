@@ -1,21 +1,24 @@
+import { Link } from "react-router-dom";
+
 export default function SignUpSection() {
   return (
-    <section className="bg-emerald-600 text-white">
-      <div className="max-w-7xl mx-auto px-6 py-24 text-center">
-        <h2 className="text-4xl font-bold mb-6">
-          Ready to Get Started?
+    <section className="bg-emerald-900 text-white py-24">
+      <div className="max-w-4xl mx-auto px-6 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          Ready to File Your Taxes?
         </h2>
-        <p className="text-xl mb-10 max-w-2xl mx-auto">
-          File your taxes safely and for free with IRS-certified volunteers.
+
+        <p className="text-emerald-100 mb-8">
+          Get started today with free, secure, IRS-certified tax assistance.
         </p>
 
-        <a
-          href="#"
-          className="inline-block bg-white text-emerald-600 font-semibold px-8 py-4 rounded-lg hover:bg-gray-100 transition"
+        <Link
+          to="/get-started"
+          className="inline-block bg-white text-emerald-900 px-10 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition"
         >
-          Get Started
-        </a>
+          Get Started Now
+        </Link>
       </div>
     </section>
-  )
+  );
 }
