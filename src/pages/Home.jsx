@@ -29,11 +29,12 @@ export default function Home() {
           Ready to File Your Taxes?
         </h2>
         <a
-          href="/get-started"
-          className="bg-emerald-600 text-white px-10 py-4 rounded-lg font-bold hover:bg-emerald-700 transition"
-        >
-          Get Started Now
-        </a>
+  href="/intake"
+  className="mt-6 inline-block bg-emerald-600 text-white px-8 py-4 rounded-lg font-bold hover:bg-emerald-700 transition"
+>
+  Get Started
+</a>
+
       </section>
     </div>
   );
