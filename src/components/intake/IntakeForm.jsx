@@ -1,4 +1,5 @@
 import { useState } from "react";
+import intakeFormSchema from "@/data/intakeSchema";
 
 // Steps
 import PersonalInfoStep from "./PersonalInfoStep";
@@ -21,7 +22,7 @@ const steps = [
 
 export default function IntakeForm() {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(intakeFormSchema);
 
   const StepComponent = steps[currentStep].component;
 
