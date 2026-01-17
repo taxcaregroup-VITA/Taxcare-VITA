@@ -1,4 +1,4 @@
 export default function App() {
-return <IntakeForm />;
+return <Home />;
 
 }
