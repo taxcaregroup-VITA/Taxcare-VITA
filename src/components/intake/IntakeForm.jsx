@@ -1,60 +1,92 @@
-import React, { useState } from "react";
+import { useState } from "react";
+
+// Steps
 import PersonalInfoStep from "./PersonalInfoStep";
 import DependentsStep from "./DependentsStep";
 import IncomeStep from "./IncomeStep";
 import ExpensesStep from "./ExpensesStep";
-import HealthInsuranceStep from "./HealthInsuranceStep";
 import OtherTaxesStep from "./OtherTaxesStep";
+import HealthInsuranceStep from "./HealthInsuranceStep";
 import NotesStep from "./NotesStep";
 
+const steps = [
+  { id: "personal", label: "Personal Info", component: PersonalInfoStep },
+  { id: "dependents", label: "Dependents", component: DependentsStep },
+  { id: "income", label: "Income", component: IncomeStep },
+  { id: "expenses", label: "Expenses", component: ExpensesStep },
+  { id: "otherTaxes", label: "Other Taxes", component: OtherTaxesStep },
+  { id: "health", label: "Health Insurance", component: HealthInsuranceStep },
+  { id: "notes", label: "Notes", component: NotesStep },
+];
+
 export default function IntakeForm() {
-  const [data, setData] = useState({});
-  const [step, setStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [formData, setFormData] = useState({});
 
-  const steps = [
-    { label: "Personal Info", component: PersonalInfoStep },
-    { label: "Dependents", component: DependentsStep },
-    { label: "Income", component: IncomeStep },
-    { label: "Expenses", component: ExpensesStep },
-    { label: "Health Insurance", component: HealthInsuranceStep },
-    { label: "Other Taxes", component: OtherTaxesStep },
-    { label: "Notes", component: NotesStep },
-  ];
+  const StepComponent = steps[currentStep].component;
 
-  const StepComponent = steps[step].component;
+  const next = () => {
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
 
-  const nextStep = () => setStep((prev) => Math.min(prev + 1, steps.length - 1));
-  const prevStep = () => setStep((prev) => Math.max(prev - 1, 0));
+  const back = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const submit = () => {
+    console.log("INTAKE DATA:", formData);
+    alert("Intake complete — ready for review");
+  };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
-      <h2 className="text-2xl font-bold">{steps[step].label}</h2>
+    <div className="max-w-4xl mx-auto px-6 py-10">
+      {/* Progress */}
+      <div className="mb-8">
+        <div className="text-sm text-gray-500 mb-2">
+          Step {currentStep + 1} of {steps.length}
+        </div>
+        <div className="h-2 bg-gray-200 rounded">
+          <div
+            className="h-2 bg-blue-600 rounded transition-all"
+            style={{
+              width: `${((currentStep + 1) / steps.length) * 100}%`,
+            }}
+          />
+        </div>
+      </div>
 
-      {/* Render current step */}
-      <StepComponent data={data} onChange={setData} />
+      {/* Step Content */}
+      <div className="bg-white border rounded-2xl p-8 shadow-sm">
+        <StepComponent formData={formData} setFormData={setFormData} />
+      </div>
 
-      {/* Navigation Buttons */}
-      <div className="flex justify-between mt-6">
+      {/* Navigation */}
+      <div className="flex justify-between mt-8">
         <button
-          onClick={prevStep}
-          disabled={step === 0}
-          className="px-6 py-3 bg-gray-200 rounded-lg font-semibold hover:bg-gray-300 disabled:opacity-50"
+          onClick={back}
+          disabled={currentStep === 0}
+          className="px-6 py-3 rounded-lg border disabled:opacity-50"
         >
           Back
         </button>
-        {step < steps.length - 1 ? (
+
+        {currentStep < steps.length - 1 ? (
           <button
-            onClick={nextStep}
-            className="px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700"
+            onClick={next}
+            className="px-6 py-3 rounded-lg bg-blue-600 text-white"
           >
             Next
           </button>
         ) : (
           <button
-            onClick={() => console.log("Final data submitted:", data)}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700"
+            onClick={submit}
+            className="px-6 py-3 rounded-lg bg-green-600 text-white"
           >
-            Submit
+            Submit Intake
           </button>
         )}
       </div>
