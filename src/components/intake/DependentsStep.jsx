@@ -1,89 +1,118 @@
-// src/components/intake/DependentsStep.jsx
-import React from 'react';
+import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "../LanguageContext";
 import { Plus, Trash } from "lucide-react";
 
 export default function DependentsStep({ data, onChange }) {
+  const { t, language } = useLanguage();
   const dependents = data.dependents || [];
+
+  const updateDependent = (index, field, value) => {
+    const newDeps = [...dependents];
+    newDeps[index] = { ...newDeps[index], [field]: value };
+    onChange({ ...data, dependents: newDeps });
+  };
 
   const addDependent = () => {
     onChange({
       ...data,
-      dependents: [...dependents, { name: '', ssn: '', birthDate: '', relationship: '' }]
+      dependents: [...dependents, { name: "", ssn: "", dob: "", relationship: "", monthsLived: "" }],
     });
   };
 
-  const updateDependent = (index, field, value) => {
-    const updated = dependents.map((dep, i) =>
-      i === index ? { ...dep, [field]: value } : dep
-    );
-    onChange({ ...data, dependents: updated });
-  };
-
   const removeDependent = (index) => {
-    const updated = dependents.filter((_, i) => i !== index);
-    onChange({ ...data, dependents: updated });
+    const newDeps = dependents.filter((_, i) => i !== index);
+    onChange({ ...data, dependents: newDeps });
   };
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">Dependents</h2>
-      <p className="text-gray-600">Enter information for each dependent you will claim on your tax return.</p>
+      <h2 className="text-2xl font-bold mb-4">{t("dependents")}</h2>
+      <p className="text-gray-600 mb-6 max-w-2xl">
+        {t("dependents_instructions")}
+      </p>
 
       {dependents.map((dep, index) => (
-        <div key={index} className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4 relative">
-          <button
-            type="button"
-            onClick={() => removeDependent(index)}
-            className="absolute top-4 right-4 text-red-500 hover:text-red-700"
-          >
-            <Trash />
-          </button>
+        <div
+          key={index}
+          className="bg-white border border-slate-200 rounded-2xl p-6 relative"
+        >
+          <div className="absolute top-4 right-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => removeDependent(index)}
+            >
+              <Trash className="h-4 w-4" />
+            </Button>
+          </div>
 
-          <div>
-            <Label>Name</Label>
-            <Input
-              value={dep.name}
-              onChange={(e) => updateDependent(index, 'name', e.target.value)}
-              placeholder="Full Name"
-              className="mt-1"
-            />
-          </div>
-          <div>
-            <Label>SSN</Label>
-            <Input
-              value={dep.ssn}
-              onChange={(e) => updateDependent(index, 'ssn', e.target.value)}
-              placeholder="XXX-XX-XXXX"
-              className="mt-1"
-            />
-          </div>
-          <div>
-            <Label>Date of Birth</Label>
-            <Input
-              type="date"
-              value={dep.birthDate}
-              onChange={(e) => updateDependent(index, 'birthDate', e.target.value)}
-              className="mt-1"
-            />
-          </div>
-          <div>
-            <Label>Relationship</Label>
-            <Input
-              value={dep.relationship}
-              onChange={(e) => updateDependent(index, 'relationship', e.target.value)}
-              placeholder="Child, Parent, etc."
-              className="mt-1"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label>{t("dependentName")}</Label>
+              <Input
+                value={dep.name || ""}
+                onChange={(e) => updateDependent(index, "name", e.target.value)}
+                className="mt-1"
+              />
+            </div>
+
+            <div>
+              <Label>{t("dependentSSN")}</Label>
+              <Input
+                value={dep.ssn || ""}
+                onChange={(e) => updateDependent(index, "ssn", e.target.value)}
+                className="mt-1"
+              />
+            </div>
+
+            <div>
+              <Label>{t("dependentDOB")}</Label>
+              <Input
+                type="date"
+                value={dep.dob || ""}
+                onChange={(e) => updateDependent(index, "dob", e.target.value)}
+                className="mt-1"
+              />
+            </div>
+
+            <div>
+              <Label>{t("dependentRelationship")}</Label>
+              <Input
+                value={dep.relationship || ""}
+                onChange={(e) => updateDependent(index, "relationship", e.target.value)}
+                className="mt-1"
+              />
+            </div>
+
+            <div>
+              <Label>{t("dependentMonthsLived")}</Label>
+              <Input
+                type="number"
+                min="0"
+                max="12"
+                value={dep.monthsLived || ""}
+                onChange={(e) => updateDependent(index, "monthsLived", e.target.value)}
+                className="mt-1"
+              />
+            </div>
           </div>
         </div>
       ))}
 
-      <Button onClick={addDependent} className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700">
-        <Plus /> Add Dependent
-      </Button>
+      <div>
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={addDependent}
+          className="flex items-center gap-2"
+        >
+          <Plus className="h-4 w-4" />
+          {t("addDependent")}
+        </Button>
+      </div>
     </div>
   );
 }
