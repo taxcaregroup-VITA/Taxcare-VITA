@@ -1,21 +1,21 @@
-import React from 'react';
-import { Textarea } from "../components/ui/textarea";
-import { useLanguage } from '../LanguageContext';
-
-export default function NotesStep({ data, onChange }) {
-  const { language } = useLanguage();
-  const notes = data.notes || '';
-
+export default function NotesStep({ formData, setFormData }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-6">
-      <h3 className="text-lg font-semibold text-slate-900 mb-4">
-        {language === 'es' ? 'Notas Adicionales' : 'Additional Notes'}
-      </h3>
-      <Textarea
-        value={notes}
-        onChange={(e) => onChange({ ...data, notes: e.target.value })}
-        rows={4}
-        placeholder={language === 'es' ? 'Ingrese cualquier nota adicional...' : 'Enter any additional notes...'}
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold">Additional Notes</h2>
+
+      <p className="text-gray-600 max-w-2xl">
+        Use this section to tell the tax preparer anything important about your
+        tax situation that wasn’t covered elsewhere.
+      </p>
+
+      <textarea
+        rows={6}
+        className="w-full border rounded-lg px-4 py-3"
+        placeholder="Example: recent move, name change, disaster loss, IRS letters received, etc."
+        value={formData.notes || ""}
+        onChange={(e) =>
+          setFormData({ ...formData, notes: e.target.value })
+        }
       />
     </div>
   );
