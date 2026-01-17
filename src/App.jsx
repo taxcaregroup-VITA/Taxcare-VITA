@@ -19,7 +19,6 @@ export default function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<Privacy />} />
-        <Route path="/get-started" element={<GetStarted />} />
         <Route path="/schedule" element={<Schedule />} />
       </Routes>
     </Layout>
