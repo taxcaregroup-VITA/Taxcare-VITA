@@ -1,65 +1,92 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from "react-router-dom";
+import { useState } from "react";
 
 const navItems = [
-  { name: 'Home', page: '/' },
-  { name: 'About', page: '/about' },
-  { name: 'FAQ', page: '/faq' },
-  { name: 'Contact', page: '/contact' },
-  { name: 'Privacy', page: '/privacy' },
-  { name: 'Get Started', page: '/get-started' },
-  { name: 'Schedule', page: '/schedule' },
+  { name: "Home", to: "/" },
+  { name: "About", to: "/about" },
+  { name: "FAQ", to: "/faq" },
+  { name: "Contact", to: "/contact" },
 ];
 
 export default function Layout({ children }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-          <div className="flex-shrink-0 text-emerald-600 font-bold text-xl">
-            Taxcare Group
-          </div>
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="font-bold text-xl text-emerald-700">
+            TaxCare VITA
+          </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-4">
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-6">
             {navItems.map(item => (
-              <Link key={item.page} to={item.page} className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium">
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  `text-sm font-medium transition ${
+                    isActive
+                      ? "text-emerald-700"
+                      : "text-gray-600 hover:text-emerald-700"
+                  }`
+                }
+              >
                 {item.name}
-              </Link>
+              </NavLink>
             ))}
+
+            <Link
+              to="/get-started"
+              className="ml-4 bg-emerald-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-emerald-700 transition"
+            >
+              Get Started
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-              Menu
-            </button>
-          </div>
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden text-gray-700"
+          >
+            ☰
+          </button>
         </div>
 
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white shadow-lg">
+        {/* Mobile Menu */}
+        {open && (
+          <div className="md:hidden bg-white border-t">
             {navItems.map(item => (
-              <Link key={item.page} to={item.page} onClick={() => setMobileMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600">
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={() => setOpen(false)}
+                className="block px-6 py-4 text-gray-700 hover:bg-gray-50"
+              >
                 {item.name}
               </Link>
             ))}
+
+            <Link
+              to="/get-started"
+              onClick={() => setOpen(false)}
+              className="block px-6 py-4 font-semibold text-emerald-700"
+            >
+              Get Started
+            </Link>
           </div>
         )}
       </header>
 
-      {/* Main content */}
-      <main className="flex-1">
-        {children}
-      </main>
+      {/* Main */}
+      <main className="flex-1">{children}</main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-6 text-center">
-        © 2024 Taxcare Group, Inc.
+      <footer className="bg-gray-900 text-gray-300 py-6 text-center text-sm">
+        © {new Date().getFullYear()} TaxCare VITA
       </footer>
     </div>
   );
