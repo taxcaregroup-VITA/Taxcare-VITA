@@ -1,5 +1,7 @@
-import Home from "./pages/Home";
-
 export default function App() {
-  return <Home />;
+  return (
+    <div style={{ padding: 40 }}>
+      <h1>App is rendering</h1>
+    </div>
+  );
 }
