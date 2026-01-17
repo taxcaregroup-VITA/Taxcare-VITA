@@ -18,7 +18,7 @@ export default function Layout({ children }) {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="font-bold text-xl text-emerald-700">
-            TaxCare VITA
+            TaxCare Group
           </Link>
 
           {/* Desktop Nav */}
