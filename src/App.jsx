@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./components/pages/Home";
-import IntakeForm from "./components/intake/IntakeForm";
+import Home from "../components/pages/Home";
+import IntakeForm from "../components/intake/IntakeForm";
 
 function App() {
   return (
