@@ -1,46 +1,35 @@
+// src/components/home/TestimonialsSection.jsx
+import React from "react";
+
 export default function TestimonialsSection() {
   const testimonials = [
     {
-      name: "Maria R.",
-      quote:
-        "The volunteers were incredibly helpful. I filed my taxes from home and paid nothing.",
+      name: "Maria S.",
+      text: "The VITA volunteers made filing my taxes so easy and stress-free. Highly recommend!",
     },
     {
-      name: "James L.",
-      quote:
-        "Fast, secure, and professional. I finally understand my tax return.",
+      name: "James K.",
+      text: "I got all my questions answered and filed my return safely from home. Great service!",
     },
     {
-      name: "Angela T.",
-      quote:
-        "As a first-time filer, this service made everything stress-free.",
+      name: "Aisha T.",
+      text: "Professional, friendly, and completely free. VITA is amazing!",
     },
   ];
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold mb-12">
-          What Clients Are Saying
-        </h2>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
-              className="
-                bg-gray-50 p-6 rounded-xl
-                shadow-sm hover:shadow-lg hover:-translate-y-1
-                transition-all duration-300
-              "
-            >
-              <p className="text-gray-700 mb-4">“{t.quote}”</p>
-              <p className="font-semibold text-emerald-600">
-                — {t.name}
-              </p>
-            </div>
-          ))}
-        </div>
+    <section className="my-16 max-w-5xl mx-auto px-6">
+      <h2 className="text-3xl font-bold text-center mb-12">What Our Clients Say</h2>
+      <div className="grid md:grid-cols-3 gap-8">
+        {testimonials.map((t, index) => (
+          <div
+            key={index}
+            className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+          >
+            <p className="text-gray-700 mb-4">"{t.text}"</p>
+            <p className="font-semibold text-gray-900">- {t.name}</p>
+          </div>
+        ))}
       </div>
     </section>
   );
