@@ -1,22 +1,32 @@
+import React from "react";
+
 export default function NotesStep({ formData, setFormData }) {
+  const notes = formData.notes || "";
+
+  const updateNotes = (value) => {
+    setFormData({
+      ...formData,
+      notes: value,
+    });
+  };
+
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">Additional Notes</h2>
+      <h2 className="text-xl font-bold mb-4">Additional Notes</h2>
 
-      <p className="text-gray-600 max-w-2xl">
-        Use this section to tell the tax preparer anything important about your
-        tax situation that wasn’t covered elsewhere.
-      </p>
-
-      <textarea
-        rows={6}
-        className="w-full border rounded-lg px-4 py-3"
-        placeholder="Example: recent move, name change, disaster loss, IRS letters received, etc."
-        value={formData.notes || ""}
-        onChange={(e) =>
-          setFormData({ ...formData, notes: e.target.value })
-        }
-      />
+      <div className="bg-gray-50 p-4 rounded-lg border">
+        <label htmlFor="additionalNotes" className="block mb-2 font-semibold">
+          Any additional notes, concerns, or information you'd like us to know
+        </label>
+        <textarea
+          id="additionalNotes"
+          value={notes}
+          onChange={(e) => updateNotes(e.target.value)}
+          rows={6}
+          className="w-full border rounded p-3"
+          placeholder="Enter any additional notes about your tax situation..."
+        />
+      </div>
     </div>
   );
 }
