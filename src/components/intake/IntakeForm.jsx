@@ -52,9 +52,7 @@ export default function IntakeForm() {
         <div className="h-2 bg-gray-200 rounded">
           <div
             className="h-2 bg-blue-600 rounded transition-all duration-300"
-            style={{
-              width: `${((currentStep + 1) / steps.length) * 100}%`,
-            }}
+            style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
           />
         </div>
       </div>
@@ -69,7 +67,7 @@ export default function IntakeForm() {
         <button
           onClick={back}
           disabled={currentStep === 0}
-          className="px-6 py-3 rounded-lg border disabled:opacity-50"
+          className="px-6 py-3 rounded-lg border disabled:opacity-50 hover:bg-gray-100 transition"
         >
           Back
         </button>
