@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Button } from '@/components/ui/button';
 
 export default function HeroSection() {
   return (
@@ -19,12 +20,14 @@ export default function HeroSection() {
             No fees. No upsells. Ever.
           </p>
 
-          <Link
-            to="/get-started"
-            className="inline-flex items-center bg-white text-emerald-900 px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition"
-          >
-            Get Started
-          </Link>
+          <Link to="/get-started">
+  <Button
+    size="lg"
+    className="w-full sm:w-auto bg-white text-emerald-900 hover:bg-emerald-50 font-semibold px-8 py-6 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all"
+  >
+    Get Started
+  </Button>
+</Link>
         </div>
 
         {/* Image */}
