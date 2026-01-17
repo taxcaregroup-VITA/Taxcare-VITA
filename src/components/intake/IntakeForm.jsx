@@ -1,5 +1,4 @@
 import { useState } from "react";
-import intakeFormSchema from "@/data/intakeSchema";
 
 // Steps
 import PersonalInfoStep from "./PersonalInfoStep";
@@ -22,7 +21,7 @@ const steps = [
 
 export default function IntakeForm() {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState(intakeFormSchema);
+  const [formData, setFormData] = useState({});
 
   const StepComponent = steps[currentStep].component;
 
@@ -39,8 +38,8 @@ export default function IntakeForm() {
   };
 
   const submit = () => {
-    console.log("INTAKE DATA:", formData);
-    alert("Intake complete — ready for review");
+    console.log("INTAKE FORM DATA:", formData);
+    alert("Intake complete — ready for review!");
   };
 
   return (
@@ -48,11 +47,11 @@ export default function IntakeForm() {
       {/* Progress */}
       <div className="mb-8">
         <div className="text-sm text-gray-500 mb-2">
-          Step {currentStep + 1} of {steps.length}
+          Step {currentStep + 1} of {steps.length}: {steps[currentStep].label}
         </div>
         <div className="h-2 bg-gray-200 rounded">
           <div
-            className="h-2 bg-blue-600 rounded transition-all"
+            className="h-2 bg-blue-600 rounded transition-all duration-300"
             style={{
               width: `${((currentStep + 1) / steps.length) * 100}%`,
             }}
@@ -78,14 +77,14 @@ export default function IntakeForm() {
         {currentStep < steps.length - 1 ? (
           <button
             onClick={next}
-            className="px-6 py-3 rounded-lg bg-blue-600 text-white"
+            className="px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
           >
             Next
           </button>
         ) : (
           <button
             onClick={submit}
-            className="px-6 py-3 rounded-lg bg-green-600 text-white"
+            className="px-6 py-3 rounded-lg bg-green-600 text-white hover:bg-green-700 transition"
           >
             Submit Intake
           </button>
