@@ -20,12 +20,13 @@ export default function HeroSection() {
           </p>
 
           <Link to="/get-started">
-  <Button
-    size="lg"
-    className="w-full sm:w-auto bg-white text-emerald-900 hover:bg-emerald-50 font-semibold px-8 py-6 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all"
-  >
-    Get Started
-  </Button>
+  <a
+  href="/get-started"
+  className="inline-block bg-white text-emerald-700 font-semibold px-8 py-4 rounded-xl
+             shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+>
+  Get Started
+</a>
 </Link>
         </div>
 
