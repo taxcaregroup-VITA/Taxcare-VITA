@@ -21,7 +21,10 @@ const steps = [
 
 export default function IntakeForm() {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+  dependents: [],
+});
+
 
   const StepComponent = steps[currentStep].component;
 
