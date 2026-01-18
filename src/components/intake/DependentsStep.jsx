@@ -1,68 +1,115 @@
-import React from "react";
-
 export default function DependentsStep({ formData, setFormData }) {
   const dependents = formData.dependents || [];
 
   const updateDependent = (index, field, value) => {
-    const newDeps = [...dependents];
-    newDeps[index] = { ...newDeps[index], [field]: value };
-    setFormData({ ...formData, dependents: newDeps });
+    const updated = [...dependents];
+    updated[index] = { ...updated[index], [field]: value };
+    setFormData({ ...formData, dependents: updated });
   };
 
   const addDependent = () => {
     setFormData({
       ...formData,
-      dependents: [...dependents, { name: "", dob: "", ssn: "" }],
+      dependents: [
+        ...dependents,
+        {
+          name: "",
+          ssn: "",
+          dob: "",
+          relationship: "",
+          monthsLivedWithYou: "",
+          student: "no",
+          disabled: "no",
+          providedSupport: "",
+          citizenResident: "",
+        },
+      ],
     });
   };
 
   const removeDependent = (index) => {
-    const newDeps = dependents.filter((_, i) => i !== index);
-    setFormData({ ...formData, dependents: newDeps });
+    setFormData({
+      ...formData,
+      dependents: dependents.filter((_, i) => i !== index),
+    });
   };
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-bold mb-4">Dependents</h2>
+    <div className="space-y-6">
+      <h2 className="text-xl font-bold">Dependents</h2>
 
       {dependents.map((dep, index) => (
-        <div key={index} className="border p-4 rounded space-y-2">
-          <div>
-            <label>Name</label>
-            <input
-              type="text"
-              value={dep.name}
-              onChange={(e) => updateDependent(index, "name", e.target.value)}
-              className="border p-2 rounded w-full"
-            />
-          </div>
+        <div key={index} className="border rounded-lg p-4 space-y-3">
+          <h3 className="font-semibold">Dependent #{index + 1}</h3>
 
-          <div>
-            <label>Date of Birth</label>
-            <input
-              type="date"
-              value={dep.dob}
-              onChange={(e) => updateDependent(index, "dob", e.target.value)}
-              className="border p-2 rounded w-full"
-            />
-          </div>
+          <input
+            placeholder="Full Name"
+            className="border p-2 rounded w-full"
+            value={dep.name}
+            onChange={(e) => updateDependent(index, "name", e.target.value)}
+          />
 
-          <div>
-            <label>SSN</label>
-            <input
-              type="text"
-              value={dep.ssn}
-              onChange={(e) => updateDependent(index, "ssn", e.target.value)}
-              className="border p-2 rounded w-full"
-            />
-          </div>
+          <input
+            placeholder="SSN"
+            className="border p-2 rounded w-full"
+            value={dep.ssn}
+            onChange={(e) => updateDependent(index, "ssn", e.target.value)}
+          />
+
+          <input
+            type="date"
+            className="border p-2 rounded w-full"
+            value={dep.dob}
+            onChange={(e) => updateDependent(index, "dob", e.target.value)}
+          />
+
+          <input
+            placeholder="Relationship to you"
+            className="border p-2 rounded w-full"
+            value={dep.relationship}
+            onChange={(e) =>
+              updateDependent(index, "relationship", e.target.value)
+            }
+          />
+
+          <input
+            type="number"
+            placeholder="Months lived with you (0–12)"
+            className="border p-2 rounded w-full"
+            value={dep.monthsLivedWithYou}
+            onChange={(e) =>
+              updateDependent(index, "monthsLivedWithYou", e.target.value)
+            }
+          />
+
+          {[
+            ["student", "Full-time student?"],
+            ["disabled", "Permanently disabled?"],
+            ["providedSupport", "Did you provide over 50% support?"],
+            ["citizenResident", "U.S. citizen / resident / national?"],
+          ].map(([field, label]) => (
+            <div key={field}>
+              <label className="block font-medium">{label}</label>
+              <select
+                className="border p-2 rounded w-full"
+                value={dep[field]}
+                onChange={(e) =>
+                  updateDependent(index, field, e.target.value)
+                }
+              >
+                <option value="">Select</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+          ))}
 
           <button
             type="button"
             onClick={() => removeDependent(index)}
-            className="bg-red-500 text-white px-4 py-2 rounded mt-2 hover:bg-red-600"
+            className="text-red-600 text-sm"
           >
-            Remove Dependent
+            Remove dependent
           </button>
         </div>
       ))}
@@ -70,7 +117,7 @@ export default function DependentsStep({ formData, setFormData }) {
       <button
         type="button"
         onClick={addDependent}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        className="bg-blue-600 text-white px-4 py-2 rounded"
       >
         Add Dependent
       </button>
