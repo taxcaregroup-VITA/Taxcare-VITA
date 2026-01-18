@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 // Steps
+import ConsentStep from "../intake/ConsentStep";
 import PersonalInfoStep from "../intake/PersonalInfoStep";
 import DependentsStep from "../intake/DependentsStep";
 import IncomeStep from "../intake/IncomeStep";
@@ -13,6 +14,7 @@ import CreditsStep from "./CreditsStep";
 import OtherInfoStep from "./OtherInfoStep";
 
 const steps = [
+  { id: "consent", label: "Consent", component: ConsentStep },
   { id: "personal", label: "Personal Info", component: PersonalInfoStep },
   { id: "household", label: "Household", component: HouseholdStep },
   { id: "dependents", label: "Dependents", component: DependentsStep },
@@ -33,6 +35,13 @@ export default function IntakeForm() {
 
 
   const StepComponent = steps[currentStep].component;
+
+  const isConsentStep = steps[currentStep].id === "consent";
+
+const consentComplete =
+  formData.consent14446?.virtualConsent === "yes" &&
+  formData.consent14446?.electronicCommunication === "yes" &&
+  formData.consent14446?.eSignature === "yes";
 
   const next = () => {
     if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
@@ -77,11 +86,13 @@ export default function IntakeForm() {
 
         {currentStep < steps.length - 1 ? (
           <button
-            onClick={next}
-            className="px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
-          >
-            Next
-          </button>
+  onClick={next}
+  disabled={isConsentStep && !consentComplete}
+  className="px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  Next
+</button>
+
         ) : (
           <button
             onClick={submit}
