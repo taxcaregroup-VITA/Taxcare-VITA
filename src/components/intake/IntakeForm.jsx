@@ -30,9 +30,18 @@ const steps = [
 export default function IntakeForm() {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
+  consent14446: {},
+  personal: {},
+  household: {},
   dependents: [],
+  income: {},
+  expenses: {},
+  credits: {},
+  otherTaxes: {},
+  healthInsurance: {},
+  otherInfo: {},
+  notes: "",
 });
-
 
   const StepComponent = steps[currentStep].component;
 
