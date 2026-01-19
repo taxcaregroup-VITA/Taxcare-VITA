@@ -9,14 +9,12 @@ import ExpensesStep from "../intake/ExpensesStep";
 import OtherTaxesStep from "../intake/OtherTaxesStep";
 import HealthInsuranceStep from "../intake/HealthInsuranceStep";
 import NotesStep from "../intake/NotesStep";
-import HouseholdStep from "./HouseholdStep";
 import CreditsStep from "./CreditsStep";
 import OtherInfoStep from "./OtherInfoStep";
 
 const steps = [
   { id: "consent", label: "Consent", component: ConsentStep },
   { id: "personal", label: "Personal Info", component: PersonalInfoStep },
-  { id: "household", label: "Household", component: HouseholdStep },
   { id: "dependents", label: "Dependents", component: DependentsStep },
   { id: "income", label: "Income", component: IncomeStep },
   { id: "expenses", label: "Expenses", component: ExpensesStep },
@@ -32,7 +30,6 @@ export default function IntakeForm() {
   const [formData, setFormData] = useState({
   consent14446: {},
   personal: {},
-  household: {},
   dependents: [],
   income: {},
   expenses: {},
