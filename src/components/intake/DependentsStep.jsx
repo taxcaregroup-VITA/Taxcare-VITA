@@ -90,7 +90,7 @@ export default function DependentsStep({ formData, setFormData }) {
             ["student", "Full-time student?"],
             ["disabled", "Permanently disabled?"],
             ["providedSupport", "Did you provide over 50% support?"],
-            ["citizenStatus", "U.S. citizen"],
+            ["citizenStatus", "U.S. citizen?"],
             ["citizenResidence", "Resident of U.S., Mexico, or Canada?"],
             ["ipPIN", "Issued IP PIN?"],
           ].map(([field, label]) => (
