@@ -171,8 +171,11 @@ export default function PersonalInfoStep({ formData, setFormData }) {
             value={personal.spouseLastName || ""}
             onChange={(e) => update("spouseLastName", e.target.value)}
             className="border p-2 rounded w-full"
-          />
+          </div>
 
+      {/* DOB + Job */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
           <input
             placeholder="Spouse Date of Birth"
             type="date"
