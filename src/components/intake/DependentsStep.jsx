@@ -14,14 +14,15 @@ export default function DependentsStep({ formData, setFormData }) {
         ...dependents,
         {
           name: "",
-          ssn: "",
           dob: "",
           relationship: "",
           monthsLivedWithYou: "",
+          maritalStatus: "",
+          citizenResident: "",
           student: "no",
           disabled: "no",
           providedSupport: "",
-          citizenResident: "",
+          
         },
       ],
     });
@@ -64,7 +65,7 @@ export default function DependentsStep({ formData, setFormData }) {
           />
 
           <input
-            placeholder="Relationship to you"
+            placeholder="Relationship to you (child, parent, none, etc.)"
             className="border p-2 rounded w-full"
             value={dep.relationship}
             onChange={(e) =>
@@ -82,11 +83,23 @@ export default function DependentsStep({ formData, setFormData }) {
             }
           />
 
+           <input
+            type="number"
+            placeholder="Single or Married as of 12/31/2025"
+            className="border p-2 rounded w-full"
+            value={dep.maritalStatus}
+            onChange={(e) =>
+              updateDependent(index, "maritalStatus", e.target.value)
+            }
+          />
+
           {[
             ["student", "Full-time student?"],
             ["disabled", "Permanently disabled?"],
             ["providedSupport", "Did you provide over 50% support?"],
-            ["citizenResident", "U.S. citizen / resident / national?"],
+            ["citizenStatus", "U.S. citizen"],
+            ["citizenResidence", "Resident of U.S., Mexico, or Canada?"],
+            ["ipPIN", "Issued IP PIN?"],
           ].map(([field, label]) => (
             <div key={field}>
               <label className="block font-medium">{label}</label>
