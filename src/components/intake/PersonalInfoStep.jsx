@@ -149,7 +149,7 @@ export default function PersonalInfoStep({ formData, setFormData }) {
 
       {/* Spouse */}
       {personal.maritalStatus === "married" && (
-        <div className="border-t pt-6 space-y-4">
+         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <h3 className="font-semibold">Spouse Information</h3>
 
           <input
