@@ -34,7 +34,7 @@ export default function expensesStep({ formData, setFormData }) {
     <div className="space-y-4">
       <h2 className="text-xl font-bold">Expenses and Tax Related Events</h2>
       <p className="text-gray-600">
-        Select all expenses types received during the tax year.
+        Check only the boxes that apply to you and/or your spouse.
       </p>
 
       {items.map(([key, label]) => (
