@@ -192,7 +192,7 @@ export default function PersonalInfoStep({ formData, setFormData }) {
             className="border p-2 rounded w-full"
           />
         </div>
-          
+          </div>
         </div>
       )}
 
