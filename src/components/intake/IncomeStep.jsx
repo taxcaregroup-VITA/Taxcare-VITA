@@ -10,12 +10,21 @@ export default function IncomeStep({ formData, setFormData }) {
 
   const items = [
     ["w2", "W-2 wages"],
-    ["selfEmployment", "Self-employment / 1099-NEC"],
+    ["tips", "Tips"],
+    ["retirement", "Pensions / IRA / 401(k)"],
+    ["disability", "Disability Benefits (e.g. Payments from insurance and worker's compensation)"],
+    ["socialSecurity", "Social Security or Railroad Retirement Benefits (SSA-1099 or 1099-R)"],
+    ["unemployment", "Unemployment (1099-G)"],
+    ["refund", "Refund of state of local income tax (1099-G)"],
     ["interest", "Interest income (1099-INT)"],
     ["dividends", "Dividends (1099-DIV)"],
-    ["unemployment", "Unemployment (1099-G)"],
-    ["socialSecurity", "Social Security (SSA-1099)"],
-    ["retirement", "Pensions / IRA / 401(k)"],
+    ["interest", "Interest income (1099-INT)"],
+    ["stocks", "Sale of stocks, bonds, or real estate (1099-B)"],
+    ["carryover", "Capital loss carryover"],
+    ["alimony", "Alimony"],
+    ["rentalIncome", "Did you rent you rent out your house or room in your house?"],
+    ["gambling", "Gambling winnings, including lottery (W2-G)"],    
+    ["selfEmployment", "Self-employment (1099-MISC, 1099-NEC, 1099-K)"],
     ["other", "Other income (cash, gig, misc)"],
   ];
 
