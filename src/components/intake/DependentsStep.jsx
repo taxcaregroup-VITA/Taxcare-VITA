@@ -51,13 +51,6 @@ export default function DependentsStep({ formData, setFormData }) {
           />
 
           <input
-            placeholder="SSN"
-            className="border p-2 rounded w-full"
-            value={dep.ssn}
-            onChange={(e) => updateDependent(index, "ssn", e.target.value)}
-          />
-
-          <input
             type="date"
             className="border p-2 rounded w-full"
             value={dep.dob}
