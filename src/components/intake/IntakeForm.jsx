@@ -7,7 +7,7 @@ import DependentsStep from "../intake/DependentsStep";
 import IncomeStep from "../intake/IncomeStep";
 import ExpensesStep from "../intake/ExpensesStep";
 import NotesStep from "../intake/NotesStep";
-import OtherInfoStep from "../intake/OtherInfoStep";
+import OptionalInfoStep from "../intake/OptionalInfoStep";
 
 const steps = [
   { id: "consent", label: "Consent", component: ConsentStep },
@@ -15,7 +15,7 @@ const steps = [
   { id: "dependents", label: "Dependents", component: DependentsStep },
   { id: "income", label: "Income", component: IncomeStep },
   { id: "expenses", label: "Expenses", component: ExpensesStep },
-  { id: "otherInfo", label: "Other Info", component: OtherInfoStep },
+  { id: "optionalInfo", label: "Optional Information", component: OptionalInfoStep },
   { id: "notes", label: "Notes", component: NotesStep },
   ];
 
@@ -27,7 +27,7 @@ export default function IntakeForm() {
   dependents: [],
   income: {},
   expenses: {},
-  other: {},
+  optional: {},
   notes: "",
 });
 
