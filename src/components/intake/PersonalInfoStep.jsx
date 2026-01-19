@@ -153,9 +153,23 @@ export default function PersonalInfoStep({ formData, setFormData }) {
           <h3 className="font-semibold">Spouse Information</h3>
 
           <input
-            placeholder="Spouse Full Name"
-            value={personal.spouseName || ""}
-            onChange={(e) => update("spouseName", e.target.value)}
+            placeholder="Spouse's First Name"
+            value={personal.spouseFirstName || ""}
+            onChange={(e) => update("spouseFirstName", e.target.value)}
+            className="border p-2 rounded w-full"
+          />
+
+          <input
+            placeholder="Spouse's Middle Initial"
+            value={personal.spouseMiddleInitial || ""}
+            onChange={(e) => update("spouseMiddleInitial", e.target.value)}
+            className="border p-2 rounded w-full"
+          />
+
+          <input
+            placeholder="Spouse's Last Name"
+            value={personal.spouseLastName || ""}
+            onChange={(e) => update("spouseLastName", e.target.value)}
             className="border p-2 rounded w-full"
           />
 
@@ -166,6 +180,16 @@ export default function PersonalInfoStep({ formData, setFormData }) {
             onChange={(e) => update("spouseDob", e.target.value)}
             className="border p-2 rounded w-full"
           />
+
+          <div>
+          <label>Spouse's Job Title</label>
+          <input
+            value={personal.spouseJobTitle || ""}
+            onChange={(e) => update("spouseJobTitle", e.target.value)}
+            className="border p-2 rounded w-full"
+          />
+        </div>
+          
         </div>
       )}
 
