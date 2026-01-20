@@ -5,45 +5,54 @@ const styles = StyleSheet.create({
     padding: 30,
     fontSize: 10,
     fontFamily: "Helvetica",
-    lineHeight: 1.4,
+  },
+
+  title: {
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 12,
   },
 
   section: {
-    marginBottom: 14,
-    paddingBottom: 6,
-    borderBottomWidth: 1,
-    borderBottomColor: "#000",
-    borderBottomStyle: "solid",
+    marginBottom: 12,
   },
 
   header: {
     fontSize: 11,
     fontWeight: "bold",
-    marginBottom: 6,
-    textTransform: "uppercase",
-  },
-
-  subHeader: {
-    fontSize: 10,
-    fontWeight: "bold",
-    marginTop: 6,
     marginBottom: 4,
   },
 
-  box: {
-    padding: 6,
-    marginBottom: 6,
-    borderWidth: 1,
-    borderColor: "#000",
-    borderStyle: "solid",
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 
-  notesBox: {
-    minHeight: 80,
-    padding: 8,
+  box: {
     borderWidth: 1,
     borderColor: "#000",
-    borderStyle: "solid",
+    padding: 6,
+    marginBottom: 6,
+  },
+
+  checkboxRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 4,
+  },
+
+  checkbox: {
+    width: 10,
+    height: 10,
+    borderWidth: 1,
+    marginRight: 6,
+  },
+
+  disclaimer: {
+    marginTop: 20,
+    fontSize: 8,
+    color: "#444",
   },
 });
 
