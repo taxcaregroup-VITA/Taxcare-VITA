@@ -54,9 +54,9 @@ export default function IntakeForm() {
       setCurrentStep(currentStep - 1);
     }
   };
-
-  const submit = () => {
-  navigate("/review", { state: formData });
+const submit = () => {
+      console.log("INTAKE FORM DATA:", formData);
+    navigate("/review", { state: formData }); // ✅ now works
 };
 
   };
