@@ -56,8 +56,9 @@ export default function IntakeForm() {
   };
 
   const submit = () => {
-    console.log("INTAKE FORM DATA:", formData);
-    navigate("/review", { state: formData }); // ✅ now works
+  navigate("/review", { state: formData });
+};
+
   };
 
   return (
