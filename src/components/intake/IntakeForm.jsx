@@ -8,6 +8,7 @@ import IncomeStep from "../intake/IncomeStep";
 import ExpensesStep from "../intake/ExpensesStep";
 import NotesStep from "../intake/NotesStep";
 import OptionalInfoStep from "../intake/OptionalInfoStep";
+import { useNavigate } from "react-router-dom";
 
 const steps = [
   { id: "consent", label: "Consent", component: ConsentStep },
@@ -47,9 +48,9 @@ const consentComplete =
     if (currentStep > 0) setCurrentStep(currentStep - 1);
   };
   const submit = () => {
-    console.log("INTAKE FORM DATA:", formData);
-    alert("Intake complete — ready for review!");
-  };
+  console.log("INTAKE FORM DATA:", formData);
+  navigate("/review", { state: formData });
+};
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-10">
