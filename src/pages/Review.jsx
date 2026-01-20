@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { generatePDF } from "../pdf/generatePDF";
+import { generatePDFs } from "../pdf/generatePDF";
 
 export default function Review() {
   const { state: formData } = useLocation();
