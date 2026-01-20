@@ -1,7 +1,17 @@
-import React from "react";
 import { pdf } from "@react-pdf/renderer";
 import Form13614C from "./Form13614C";
 import Form14446 from "./Form14446";
+
+export const generatePDFs = async (formData) => {
+  const pdf13614 = await pdf(<Form13614C data={formData} />).toBlob();
+  const pdf14446 = await pdf(<Form14446 data={formData} />).toBlob();
+
+  return {
+    form13614: pdf13614,
+    form14446: pdf14446,
+  };
+};
+
 
 
 const downloadBlob = (blob, filename) => {
