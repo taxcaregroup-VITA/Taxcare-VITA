@@ -1,59 +1,30 @@
 import { StyleSheet } from "@react-pdf/renderer";
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   page: {
     padding: 30,
     fontSize: 10,
-    fontFamily: "Helvetica",
+    fontFamily: "Helvetica"
   },
-
-  title: {
+  section: {
+    marginBottom: 10
+  },
+  header: {
     fontSize: 14,
     fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 12,
+    marginBottom: 6
   },
-
-  section: {
-    marginBottom: 12,
+  label: {
+    fontWeight: "bold"
   },
-
-  header: {
-    fontSize: 11,
-    fontWeight: "bold",
-    marginBottom: 4,
-  },
-
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginBottom: 4
   },
-
   box: {
-    borderWidth: 1,
-    borderColor: "#000",
+    border: "1 solid #000",
     padding: 6,
-    marginBottom: 6,
-  },
-
-  checkboxRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 4,
-  },
-
-  checkbox: {
-    width: 10,
-    height: 10,
-    borderWidth: 1,
-    marginRight: 6,
-  },
-
-  disclaimer: {
-    marginTop: 20,
-    fontSize: 8,
-    color: "#444",
-  },
+    marginBottom: 6
+  }
 });
-
-export default styles;
