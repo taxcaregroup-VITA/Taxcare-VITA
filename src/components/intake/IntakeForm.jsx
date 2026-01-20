@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Steps
 import ConsentStep from "../intake/ConsentStep";
@@ -6,9 +7,8 @@ import PersonalInfoStep from "../intake/PersonalInfoStep";
 import DependentsStep from "../intake/DependentsStep";
 import IncomeStep from "../intake/IncomeStep";
 import ExpensesStep from "../intake/ExpensesStep";
-import NotesStep from "../intake/NotesStep";
 import OptionalInfoStep from "../intake/OptionalInfoStep";
-import { useNavigate } from "react-router-dom";
+import NotesStep from "../intake/NotesStep";
 
 const steps = [
   { id: "consent", label: "Consent", component: ConsentStep },
@@ -18,39 +18,47 @@ const steps = [
   { id: "expenses", label: "Expenses", component: ExpensesStep },
   { id: "optionalInfo", label: "Optional Information", component: OptionalInfoStep },
   { id: "notes", label: "Notes", component: NotesStep },
-  ];
+];
 
 export default function IntakeForm() {
+  const navigate = useNavigate(); // ✅ REQUIRED
+
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
-  consent14446: {},
-  personal: {},
-  dependents: [],
-  income: {},
-  expenses: {},
-  optional: {},
-  notes: "",
-});
+    consent14446: {},
+    personal: {},
+    dependents: [],
+    income: {},
+    expenses: {},
+    optional: {},
+    notes: "",
+  });
 
   const StepComponent = steps[currentStep].component;
 
   const isConsentStep = steps[currentStep].id === "consent";
 
-const consentComplete =
-  formData.consent14446?.virtualConsent === "yes" &&
-  formData.consent14446?.electronicCommunication === "yes" &&
-  formData.consent14446?.eSignature === "yes";
+  const consentComplete =
+    formData.consent14446?.virtualConsent === "yes" &&
+    formData.consent14446?.electronicCommunication === "yes" &&
+    formData.consent14446?.eSignature === "yes";
 
   const next = () => {
-    if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    }
   };
+
   const back = () => {
-    if (currentStep > 0) setCurrentStep(currentStep - 1);
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
   };
+
   const submit = () => {
-  console.log("INTAKE FORM DATA:", formData);
-  navigate("/review", { state: formData });
-};
+    console.log("INTAKE FORM DATA:", formData);
+    navigate("/review", { state: formData }); // ✅ now works
+  };
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-10">
@@ -84,13 +92,12 @@ const consentComplete =
 
         {currentStep < steps.length - 1 ? (
           <button
-  onClick={next}
-  disabled={isConsentStep && !consentComplete}
-  className="px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
->
-  Next
-</button>
-
+            onClick={next}
+            disabled={isConsentStep && !consentComplete}
+            className="px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Next
+          </button>
         ) : (
           <button
             onClick={submit}
