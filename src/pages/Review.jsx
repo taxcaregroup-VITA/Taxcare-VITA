@@ -1,8 +1,23 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { generatePDFs } from "../pdf/generatePDFs";
 
 export default function Review() {
   const { state: formData } = useLocation();
   const navigate = useNavigate();
+  const downloadPDFs = async () => {
+  const { pdf13614Blob, pdf14446Blob } = await generatePDFs(formData);
+
+  const download = (blob, name) => {
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = name;
+    link.click();
+  };
+
+  download(pdf13614Blob, "Form-13614-C.pdf");
+  download(pdf14446Blob, "Form-14446.pdf");
+};
+
 
   if (!formData) {
     return (
@@ -35,11 +50,12 @@ export default function Review() {
         </button>
 
         <button
-          onClick={() => alert("Next: Generate PDFs")}
-          className="px-6 py-3 bg-green-600 text-white rounded"
-        >
-          Confirm & Continue
-        </button>
+  onClick={downloadPDFs}
+  className="px-6 py-3 bg-green-600 text-white rounded"
+>
+  Download IRS Forms
+</button>
+
       </div>
     </div>
   );
