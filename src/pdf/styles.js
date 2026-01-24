@@ -2,29 +2,25 @@ import { StyleSheet } from "@react-pdf/renderer";
 
 export const styles = StyleSheet.create({
   page: {
-    padding: 30,
+    position: "relative",
     fontSize: 10,
-    fontFamily: "Helvetica"
   },
-  section: {
-    marginBottom: 10
+
+  background: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
   },
-  header: {
-    fontSize: 14,
-    fontWeight: "bold",
-    marginBottom: 6
+
+  text: {
+    position: "absolute",
+    fontSize: 10,
   },
-  label: {
-    fontWeight: "bold"
+
+  checkbox: {
+    position: "absolute",
+    fontSize: 12,
   },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 4
-  },
-  box: {
-    border: "1 solid #000",
-    padding: 6,
-    marginBottom: 6
-  }
 });
