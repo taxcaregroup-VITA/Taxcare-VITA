@@ -1,5 +1,4 @@
 // PartI.jsx
-import { View, Text } from "@react-pdf/renderer";
 import styles from "./styles";
 
 export default function PartI({ data }) {
