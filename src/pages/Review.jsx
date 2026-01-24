@@ -3,6 +3,7 @@ import { listPdfFields } from "../pdf/listFields";
 
 useEffect(() => {
   listPdfFields("/pdfs/Form-13614-C-fillable.pdf");
+  listPdfFields("/pdfs/Form-14446-fillable.pdf");
 }, []);
 
 const downloadPDFs = async () => {
