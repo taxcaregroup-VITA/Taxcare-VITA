@@ -1,4 +1,9 @@
 import { generateIRSForms } from "../pdf/generateIRSForms";
+import { listPdfFields } from "../pdf/listFields";
+
+useEffect(() => {
+  listPdfFields("/pdfs/Form-13614-C-fillable.pdf");
+}, []);
 
 const downloadPDFs = async () => {
   const { pdf13614, pdf14446 } = await generateIRSForms(formData);
