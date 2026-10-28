@@ -1,111 +1,95 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
 
-// Steps
-import ConsentStep from "../intake/ConsentStep";
-import PersonalInfoStep from "../intake/PersonalInfoStep";
-import DependentsStep from "../intake/DependentsStep";
-import IncomeStep from "../intake/IncomeStep";
-import ExpensesStep from "../intake/ExpensesStep";
-import OptionalInfoStep from "../intake/OptionalInfoStep";
-import NotesStep from "../intake/NotesStep";
+import ConsentStep from "./ConsentStep";
+import PersonalInfoStep from "./PersonalInfoStep";
+import DependentsStep from "./DependentsStep";
+import IncomeStep from "./IncomeStep";
+import ExpensesStep from "./ExpensesStep";
+import OptionalInfoStep from "./OptionalInfoStep";
+import NotesStep from "./NotesStep";
+import FinishStep from "./FinishStep";
 
 const steps = [
   { id: "consent", label: "Consent", component: ConsentStep },
-  { id: "personal", label: "Personal Info", component: PersonalInfoStep },
-  { id: "dependents", label: "Dependents", component: DependentsStep },
+  { id: "personal", label: "About you", component: PersonalInfoStep },
+  { id: "household", label: "Household", component: DependentsStep },
   { id: "income", label: "Income", component: IncomeStep },
-  { id: "expenses", label: "Expenses", component: ExpensesStep },
-  { id: "optionalInfo", label: "Optional Information", component: OptionalInfoStep },
+  { id: "expenses", label: "Expenses and life events", component: ExpensesStep },
+  { id: "optional", label: "Optional questions", component: OptionalInfoStep },
   { id: "notes", label: "Notes", component: NotesStep },
+  { id: "finish", label: "Review and submit", component: FinishStep },
 ];
 
+const empty = {
+  consent14446: {},
+  personal: {},
+  dependents: [],
+  income: {},
+  expenses: {},
+  optional: {},
+  notes: "",
+};
+
 export default function IntakeForm() {
-  const navigate = useNavigate(); // ✅ REQUIRED
+  const [current, setCurrent] = useState(0);
+  const [formData, setFormData] = useState(empty);
+  const headingRef = useRef(null);
 
-  const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState({
-    consent14446: {},
-    personal: {},
-    dependents: [],
-    income: {},
-    expenses: {},
-    optional: {},
-    notes: "",
-  });
+  // Move focus to the top of each new step for keyboard and screen reader users.
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+    headingRef.current?.focus();
+  }, [current]);
 
-  const StepComponent = steps[currentStep].component;
-
-  const isConsentStep = steps[currentStep].id === "consent";
-
-  const consentComplete =
-    formData.consent14446?.virtualConsent === "yes" &&
-    formData.consent14446?.electronicCommunication === "yes" &&
-    formData.consent14446?.eSignature === "yes";
-
-  const next = () => {
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
-
-  const back = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
-const submit = () => {
-    console.log("INTAKE FORM DATA:", formData);
-    navigate("/review", { state: formData });
-  };
+  const step = steps[current];
+  const StepComponent = step.component;
+  const consent = formData.consent14446 || {};
+  const consentComplete = consent.virtualConsent === "yes" && consent.electronicCommunication === "yes" && consent.eSignature === "yes";
+  const blocked = step.id === "consent" && !consentComplete;
+  const isFinish = step.id === "finish";
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-10">
-      {/* Progress */}
       <div className="mb-8">
-        <div className="text-sm text-gray-500 mb-2">
-          Step {currentStep + 1} of {steps.length}: {steps[currentStep].label}
+        <div ref={headingRef} tabIndex={-1} className="text-sm text-gray-600 mb-2 outline-none">
+          Step {current + 1} of {steps.length}: {step.label}
         </div>
-        <div className="h-2 bg-gray-200 rounded">
-          <div
-            className="h-2 bg-blue-600 rounded transition-all duration-300"
-            style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-          />
+        <div className="h-2 bg-gray-200 rounded" aria-hidden="true">
+          <div className="h-2 bg-emerald-600 rounded transition-all duration-300" style={{ width: `${((current + 1) / steps.length) * 100}%` }} />
         </div>
       </div>
 
-      {/* Step Content */}
-      <div className="bg-white border rounded-2xl p-8 shadow-sm">
-        <StepComponent formData={formData} setFormData={setFormData} />
+      <div className="bg-white border rounded-2xl p-6 md:p-8 shadow-sm">
+        <StepComponent formData={formData} setFormData={setFormData} onEdit={() => setCurrent(1)} />
       </div>
 
-      {/* Navigation */}
-      <div className="flex justify-between mt-8">
-        <button
-          onClick={back}
-          disabled={currentStep === 0}
-          className="px-6 py-3 rounded-lg border disabled:opacity-50"
-        >
-          Back
-        </button>
-
-        {currentStep < steps.length - 1 ? (
+      {!isFinish && (
+        <div className="flex justify-between mt-8">
           <button
-            onClick={next}
-            disabled={isConsentStep && !consentComplete}
-            className="px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            type="button"
+            onClick={() => setCurrent((c) => Math.max(0, c - 1))}
+            disabled={current === 0}
+            className="px-6 py-3 rounded-lg border font-semibold disabled:opacity-50"
           >
-            Next
+            Back
           </button>
-        ) : (
           <button
-            onClick={submit}
-            className="px-6 py-3 rounded-lg bg-green-600 text-white hover:bg-green-700"
+            type="button"
+            onClick={() => setCurrent((c) => Math.min(steps.length - 1, c + 1))}
+            disabled={blocked}
+            className="px-6 py-3 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Submit Intake
+            {steps[current + 1]?.id === "finish" ? "Review my answers" : "Next"}
           </button>
-        )}
-      </div>
+        </div>
+      )}
+      {isFinish && (
+        <div className="mt-6">
+          <button type="button" onClick={() => setCurrent((c) => c - 1)} className="text-emerald-800 underline">
+            Back to previous step
+          </button>
+        </div>
+      )}
     </div>
   );
 }
