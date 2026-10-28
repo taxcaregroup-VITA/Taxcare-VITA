@@ -17,8 +17,15 @@ export default function Layout({ children }) {
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="font-bold text-xl text-emerald-700">
-            TaxCare Group
+          <Link to="/" className="flex items-center gap-3 font-bold text-xl text-emerald-700">
+            <img
+              src="/taxcare-seal.svg"
+              alt="The TaxCare Group seal"
+              className="h-11 w-11"
+              width="44"
+              height="44"
+            />
+            <span>TaxCare Group</span>
           </Link>
 
           {/* Desktop Nav */}
