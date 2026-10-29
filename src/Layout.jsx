@@ -83,7 +83,7 @@ export default function Layout({ children }) {
           </div>
           <nav className="space-y-2 text-sm" aria-label="Footer">
             <p className="font-semibold text-white">Explore</p>
-            {[...navItems, { name: "Get Started", to: "/get-started" }, { name: "Privacy Policy", to: "/privacy" }].map((item) => (
+            {[...navItems, { name: "Get Started", to: "/get-started" }, { name: "What to Have Ready", to: "/documents" }, { name: "Privacy Policy", to: "/privacy" }].map((item) => (
               <Link key={item.to} to={item.to} className="block text-emerald-100/80 hover:text-white">
                 {item.name}
               </Link>

@@ -1,6 +1,8 @@
 // Last step: scope result, send TaxCare's copy, and give the taxpayer their own 13614-C.
 import { useState } from "react";
 import { screenScope } from "../../data/scope";
+import { PORTAL_OPTION } from "../../config";
+import { Choice } from "./fields";
 // The PDF library is large, so it loads only when a form is actually generated.
 const loadFiller = () => import("../../pdf/fill13614C").then((m) => m.fill13614C);
 
@@ -31,6 +33,7 @@ export default function FinishStep({ formData, onEdit }) {
   const [agree, setAgree] = useState(false);
   const [state, setState] = useState({ phase: "idle" }); // idle | sending | sent | error
   const [downloading, setDownloading] = useState(false);
+  const [service, setService] = useState(PORTAL_OPTION ? "" : "appointment"); // appointment | portal
   const p = formData.personal || {};
   const name = [p.firstName, p.lastName].filter(Boolean).join(" ");
 
@@ -53,11 +56,11 @@ export default function FinishStep({ formData, onEdit }) {
       const submittedAt = new Date().toISOString();
       const reference = newReference();
       const fill13614C = await loadFiller();
-      const staffPdf = await fill13614C(formData, { staffSummary: { reference, submittedAt, scope, name } });
+      const staffPdf = await fill13614C(formData, { staffSummary: { reference, submittedAt, scope, name, service } });
       const body = new FormData();
       body.append("pdf", new Blob([staffPdf], { type: "application/pdf" }), "13614-C.pdf");
       body.append("reference", reference);
-      body.append("summary", JSON.stringify({ reference, submittedAt, scope, formData }));
+      body.append("summary", JSON.stringify({ reference, submittedAt, scope, service, formData }));
       body.append("website", ""); // spam trap; real visitors never fill this
       const res = await fetch("/api/submit", { method: "POST", body });
       const json = await res.json().catch(() => ({}));
@@ -85,11 +88,27 @@ export default function FinishStep({ formData, onEdit }) {
         <h2 className="text-2xl font-bold text-emerald-800">Thank you{p.firstName ? `, ${p.firstName}` : ""}! Your intake was received.</h2>
         <p className="text-gray-700">
           Your reference number is <strong className="font-mono">{state.reference}</strong>. Please keep it for your records.
-          A TaxCare Group volunteer will contact you to schedule your appointment.
         </p>
-        <p className="text-gray-700">
-          Download a copy of your completed Form 13614-C. Please have it, your photo ID, and Social Security cards or ITIN letters for everyone on your return ready for your appointment.
-        </p>
+        {service === "portal" ? (
+          <div className="space-y-3 text-gray-700">
+            <p><strong>What happens next:</strong></p>
+            <ol className="list-decimal ml-6 space-y-1">
+              <li>A volunteer reviews your intake, usually within one business day.</li>
+              <li>You'll get an invitation to our secure TaxSlayer portal. Create your login and sign Form 14446, the IRS virtual consent form.</li>
+              <li>Upload your documents in the portal. We'll do a short video call to confirm your identity.</li>
+              <li>A volunteer calls you to go over your answers, prepares your return, and a second volunteer reviews it.</li>
+              <li>You review and sign your return in the portal, and we e-file it.</li>
+            </ol>
+            <p>
+              See <a href="/documents" className="underline text-emerald-800">what to have ready</a> so you can upload everything at once.
+            </p>
+          </div>
+        ) : (
+          <p className="text-gray-700">
+            A TaxCare Group volunteer will contact you to schedule your appointment. Please see <a href="/documents" className="underline text-emerald-800">what to bring</a>.
+          </p>
+        )}
+        <p className="text-gray-700">Download a copy of your completed Form 13614-C for your records.</p>
         {downloadButton}
       </div>
     );
@@ -133,6 +152,27 @@ export default function FinishStep({ formData, onEdit }) {
             )}
           </div>
 
+          {PORTAL_OPTION && (
+            <div className="rounded-xl border p-5">
+              <Choice
+                name="service"
+                label="How would you like to work with us?"
+                value={service}
+                onChange={setService}
+                options={[
+                  ["appointment", "Schedule an appointment with a volunteer"],
+                  ["portal", "No appointment: upload my documents and sign online through our secure portal"],
+                ]}
+              />
+              {service === "portal" && (
+                <p className="text-sm text-gray-600 mt-3">
+                  You'll still speak with a volunteer by phone, and do a short video call to confirm your identity
+                  {formData.personal?.maritalStatus === "married" ? " (both spouses, if filing jointly)" : ""}. There's just no appointment to wait for.
+                </p>
+              )}
+            </div>
+          )}
+
           <div className="space-y-4">
             <label className="flex items-start gap-3">
               <input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} className="mt-1 h-4 w-4 accent-emerald-600" />
@@ -153,7 +193,7 @@ export default function FinishStep({ formData, onEdit }) {
               <button
                 type="button"
                 onClick={submit}
-                disabled={!agree || state.phase === "sending"}
+                disabled={!agree || !service || state.phase === "sending"}
                 className="px-6 py-3 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {state.phase === "sending" ? "Sending…" : "Submit my intake"}

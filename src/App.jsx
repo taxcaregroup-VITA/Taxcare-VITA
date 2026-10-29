@@ -8,6 +8,7 @@ import Privacy from "./pages/Privacy";
 import GetStarted from "./pages/GetStarted";
 import Schedule from "./pages/Schedule";
 import Review from "./pages/Review";
+import Documents from "./pages/Documents";
 import IntakeForm from "./components/intake/IntakeForm";
 
 // One router for the whole site (main.jsx must not add another),
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/review" element={<Review />} />
+          <Route path="/documents" element={<Documents />} />
         </Routes>
       </Layout>
     </BrowserRouter>

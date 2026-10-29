@@ -83,13 +83,6 @@ export default function IntakeForm() {
           </button>
         </div>
       )}
-      {isFinish && (
-        <div className="mt-6">
-          <button type="button" onClick={() => setCurrent((c) => c - 1)} className="text-emerald-800 underline">
-            Back to previous step
-          </button>
-        </div>
-      )}
     </div>
   );
 }
