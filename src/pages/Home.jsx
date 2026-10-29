@@ -3,6 +3,7 @@ import {
   ArrowRight, MapPin, Shield, Award, Monitor, Lock,
   DollarSign, Flag, Calendar, Clock, Check, FileText,
 } from "lucide-react";
+import { INCOME_GUIDELINE } from "../data/site";
 
 const LOCATOR = "https://freetaxassistance.for.irs.gov/s/sitelocator";
 
@@ -14,7 +15,7 @@ const features = [
 ];
 
 const eligibility = [
-  { icon: DollarSign, title: "Household income under $67,000" },
+  { icon: DollarSign, title: `Household income about ${INCOME_GUIDELINE} or less` },
   { icon: Flag, title: "U.S. residents" },
   { icon: Calendar, title: "Valid SSN or ITIN" },
   { icon: Clock, title: "Simple returns" },
@@ -40,7 +41,7 @@ export default function Home() {
               Free Tax Help From Home
             </h1>
             <p className="text-lg md:text-2xl text-emerald-50/90 max-w-xl">
-              Get your taxes done by IRS-certified volunteers — 100% free for households earning under $67,000
+              Get your taxes done by IRS-certified volunteers — 100% free for households earning about {INCOME_GUIDELINE} or less
             </p>
             <div className="flex flex-col items-start gap-5 pt-2">
               <Link

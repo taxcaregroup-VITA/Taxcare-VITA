@@ -9,6 +9,7 @@ import GetStarted from "./pages/GetStarted";
 import Schedule from "./pages/Schedule";
 import Review from "./pages/Review";
 import Documents from "./pages/Documents";
+import Rights from "./pages/Rights";
 import IntakeForm from "./components/intake/IntakeForm";
 
 // One router for the whole site (main.jsx must not add another),
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/review" element={<Review />} />
           <Route path="/documents" element={<Documents />} />
+          <Route path="/rights" element={<Rights />} />
         </Routes>
       </Layout>
     </BrowserRouter>
