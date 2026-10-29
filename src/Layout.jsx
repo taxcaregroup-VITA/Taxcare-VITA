@@ -91,7 +91,7 @@ export default function Layout({ children }) {
           </nav>
           <div className="space-y-2 text-sm">
             <p className="font-semibold text-white">Need help in person?</p>
-            <a href="https://irs.treasury.gov/freetaxprep/" target="_blank" rel="noreferrer" className="block text-emerald-100/80 hover:text-white underline">
+            <a href="https://freetaxassistance.for.irs.gov/s/sitelocator" target="_blank" rel="noreferrer" className="block text-emerald-100/80 hover:text-white underline">
               Find an IRS free tax help site near you
             </a>
           </div>

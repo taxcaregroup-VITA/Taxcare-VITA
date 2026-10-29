@@ -4,7 +4,7 @@ import {
   DollarSign, Flag, Calendar, Clock, Check, FileText,
 } from "lucide-react";
 
-const LOCATOR = "https://irs.treasury.gov/freetaxprep/";
+const LOCATOR = "https://freetaxassistance.for.irs.gov/s/sitelocator";
 
 const features = [
   { icon: Shield, title: "100% Free Service", text: "No hidden fees. Ever.", tile: "bg-emerald-100 text-emerald-700" },

@@ -4,7 +4,7 @@ import { screenScope } from "../../data/scope";
 // The PDF library is large, so it loads only when a form is actually generated.
 const loadFiller = () => import("../../pdf/fill13614C").then((m) => m.fill13614C);
 
-const LOCATOR = "https://irs.treasury.gov/freetaxprep/";
+const LOCATOR = "https://freetaxassistance.for.irs.gov/s/sitelocator";
 
 // Reference like TC-261028-7KQ4M (date + 5 random characters, no look-alike letters).
 function newReference() {
