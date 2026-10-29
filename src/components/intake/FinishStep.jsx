@@ -109,7 +109,12 @@ export default function FinishStep({ formData, onEdit }) {
           </p>
         )}
         <p className="text-gray-700">Download a copy of your completed Form 13614-C for your records.</p>
-        {downloadButton}
+        <div className="flex flex-wrap gap-3">
+          {downloadButton}
+          <a href="/" className="px-6 py-3 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
+            Back to Home
+          </a>
+        </div>
       </div>
     );
   }

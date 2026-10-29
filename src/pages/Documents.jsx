@@ -75,8 +75,8 @@ export default function Documents() {
         </div>
       )}
 
-      <Link to="/get-started" className="inline-flex bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700">
-        Start your intake
+      <Link to="/" className="inline-flex bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700">
+        Go Home
       </Link>
     </div>
   );
