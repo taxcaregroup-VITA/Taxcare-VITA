@@ -26,42 +26,8 @@ const steps = [
   { title: "File with a volunteer", text: "An IRS-certified volunteer prepares your return and reviews it with you." },
 ];
 
-// Illustration of a tax form, calculator and pen for the hero card.
-function HeroArt() {
-  return (
-    <svg viewBox="0 0 720 420" className="w-full h-full" role="img" aria-label="Tax forms, a calculator and a pen on a desk">
-      <rect width="720" height="420" fill="#F3F1EC" />
-      {Array.from({ length: 9 }).map((_, i) => (
-        <line key={i} x1={i * 90 + 40} y1="0" x2={i * 90 - 40} y2="420" stroke="#E4E0D8" strokeWidth="3" />
-      ))}
-      <g transform="rotate(-8 300 210)">
-        <rect x="170" y="70" width="250" height="310" rx="6" fill="#F5E3D8" />
-        <rect x="190" y="55" width="250" height="310" rx="4" fill="#FFFFFF" stroke="#D9D9D9" />
-        <rect x="210" y="80" width="120" height="10" rx="2" fill="#1E4D2B" />
-        <rect x="210" y="100" width="190" height="6" rx="2" fill="#C8CCC4" />
-        {Array.from({ length: 10 }).map((_, i) => (
-          <g key={i}>
-            <rect x="210" y={125 + i * 22} width="14" height="14" rx="2" fill="none" stroke="#9AA39A" />
-            <rect x="232" y={129 + i * 22} width={110 + ((i * 37) % 60)} height="6" rx="2" fill="#D5D9D2" />
-            {i % 3 === 0 && <path d={`M213 ${132 + i * 22} l4 4 l8 -9`} stroke="#0E7A4F" strokeWidth="3" fill="none" strokeLinecap="round" />}
-          </g>
-        ))}
-      </g>
-      <g transform="rotate(10 520 230)">
-        <rect x="455" y="120" width="130" height="220" rx="22" fill="#1F2421" />
-        <rect x="470" y="140" width="100" height="44" rx="6" fill="#DDE7D8" />
-        <text x="558" y="172" textAnchor="end" fontFamily="Inter, system-ui, sans-serif" fontSize="22" fill="#1F2421">0</text>
-        {Array.from({ length: 12 }).map((_, i) => (
-          <circle key={i} cx={485 + (i % 3) * 35} cy={210 + Math.floor(i / 3) * 32} r="12" fill={i % 3 === 2 ? "#F29B38" : "#4A514C"} />
-        ))}
-      </g>
-      <g transform="rotate(32 610 250)">
-        <rect x="600" y="110" width="12" height="230" rx="6" fill="#B9BEC2" />
-        <path d="M600 340 l6 22 l6 -22 z" fill="#6E7378" />
-      </g>
-    </svg>
-  );
-}
+// Hero photo: Unsplash (free to use under the Unsplash License), served from Unsplash's image CDN.
+const HERO_PHOTO = "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80&auto=format&fit=crop";
 
 export default function Home() {
   return (
@@ -91,7 +57,14 @@ export default function Home() {
 
           <div className="relative">
             <div className="rounded-3xl overflow-hidden shadow-2xl aspect-[12/7]">
-              <HeroArt />
+              <img
+                src={HERO_PHOTO}
+                alt="Hands sorting tax forms and receipts next to a calculator"
+                className="h-full w-full object-cover"
+                width="1200"
+                height="700"
+                fetchpriority="high"
+              />
             </div>
             <div className="absolute -bottom-8 left-4 sm:-left-8 bg-white text-gray-900 rounded-2xl shadow-xl px-7 py-5">
               <p className="text-4xl font-extrabold text-emerald-800">100%</p>
