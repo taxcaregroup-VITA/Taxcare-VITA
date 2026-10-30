@@ -24,6 +24,17 @@ export default function ConsentStep({ formData, setFormData }) {
         using virtual or electronic methods.
       </p>
 
+      <div className="rounded-lg bg-gray-50 border p-4 text-sm text-gray-700 space-y-1">
+        <p>
+          <strong>Before you begin:</strong> our service is free, and IRS-certified volunteers prepare and review every return.
+          Your civil rights are protected, and you can report unethical behavior to the IRS.{" "}
+          <a href="/rights" target="_blank" rel="noreferrer" className="underline text-emerald-800">Read Your Rights</a>
+          {" "}(IRS Publications 4053 and 4836) and our{" "}
+          <a href="/privacy" target="_blank" rel="noreferrer" className="underline text-emerald-800">privacy policy</a>.
+        </p>
+        <p>You'll also sign the official IRS Form 14446 before a volunteer starts your return.</p>
+      </div>
+
       {[
         [
           "virtualConsent",
