@@ -1,7 +1,7 @@
 // Last step: scope result, send TaxCare's copy, and give the taxpayer their own 13614-C.
 import { useState, useEffect } from "react";
 import { screenScope } from "../../data/scope";
-import { PORTAL_OPTION } from "../../config";
+import { PORTAL_OPTION, CALENDLY, bookingUrl } from "../../config";
 import { Choice } from "./fields";
 // The PDF library is large, so it loads only when a form is actually generated.
 const loadFiller = () => import("../../pdf/fill13614C").then((m) => m.fill13614C);
@@ -101,6 +101,19 @@ export default function FinishStep({ formData, onEdit }) {
     </button>
   );
 
+  const bookKind = service === "portal" ? "quickId" : "full";
+  const bookLink = state.phase === "sent" ? bookingUrl(bookKind, state.reference) : "";
+  const bookButton = bookLink ? (
+    <a
+      href={bookLink}
+      target="_blank"
+      rel="noreferrer"
+      className="inline-flex px-6 py-3 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700"
+    >
+      {bookKind === "quickId" ? "Book my quick ID appointment" : "Book my appointment"}
+    </a>
+  ) : null;
+
   if (state.phase === "sent") {
     return (
       <div className="space-y-6">
@@ -115,7 +128,11 @@ export default function FinishStep({ formData, onEdit }) {
               <li>A volunteer reviews your intake, usually within one business day.</li>
               <li>You'll get an invitation to our secure TaxSlayer portal. Create your login and sign Form 14446, the IRS virtual consent form.</li>
               <li>Upload your documents in the portal.</li>
-              <li>We'll send you a Zoom or Google Meet link for your quick ID appointment, at a time you choose. Have your photo ID ready.</li>
+              <li>
+                {bookButton
+                  ? "Book your quick ID appointment below. You'll get a Zoom or Google Meet link. Have your photo ID ready."
+                  : "We'll send you a Zoom or Google Meet link for your quick ID appointment, at a time you choose. Have your photo ID ready."}
+              </li>
               <li>A volunteer calls you to go over your answers, prepares your return, and a second volunteer reviews it.</li>
               <li>You review and sign your return in the portal, and we e-file it.</li>
             </ol>
@@ -125,11 +142,15 @@ export default function FinishStep({ formData, onEdit }) {
           </div>
         ) : (
           <p className="text-gray-700">
-            A TaxCare Group volunteer will contact you to schedule your appointment. Please see <a href="/documents" className="underline text-emerald-800">what to bring</a>.
+            {bookButton
+              ? "Book your appointment with a volunteer using the button below. Your reference number is filled in for you."
+              : "A TaxCare Group volunteer will contact you to schedule your appointment."}{" "}
+            Please see <a href="/documents" className="underline text-emerald-800">what to have ready</a>.
           </p>
         )}
         <p className="text-gray-700">Download a copy of your completed Form 13614-C for your records.</p>
         <div className="flex flex-wrap gap-3">
+          {bookButton}
           {downloadButton}
           <a href="/" className="px-6 py-3 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
             Back to Home
