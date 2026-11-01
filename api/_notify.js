@@ -35,7 +35,7 @@ export async function sendAlert(subject, text) {
 }
 
 const LABEL = { in: "In scope", review: "Needs review", out: "Out of scope" };
-const SERVICE = { portal: "No appointment (TaxSlayer portal)", appointment: "Appointment with a volunteer" };
+const SERVICE = { portal: "Quick ID appointment + portal", appointment: "Full appointment with a volunteer" };
 
 export function intakeAlert({ reference, scope, service, folder }) {
   const reasons = (scope.hits || []).map((h) => `- ${h.level === "out" ? "Out" : "Review"}: ${h.text}`);

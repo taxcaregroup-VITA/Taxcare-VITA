@@ -22,7 +22,7 @@ const faqs = [
   {
     q: "Do I need to visit a location?",
     a: PORTAL_OPTION
-      ? <>No. You can meet with a volunteer by appointment, or skip the appointment and upload your documents and sign through our secure portal. Either way, a certified volunteer talks with you by phone, and a short video call confirms your identity.</>
+      ? <>No. Everything is virtual. Choose a full appointment, where a volunteer goes over everything with you, or a quick ID appointment by Zoom or Google Meet, after which you upload your documents and sign through our secure portal.</>
       : <>No. Our services are virtual: a volunteer meets with you by phone or video at a scheduled time.</>,
   },
   {

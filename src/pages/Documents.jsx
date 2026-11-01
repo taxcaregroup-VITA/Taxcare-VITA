@@ -67,10 +67,10 @@ export default function Documents() {
 
       {PORTAL_OPTION && (
         <div className="rounded-2xl bg-emerald-50 border border-emerald-100 p-6 space-y-2">
-          <h2 className="text-lg font-semibold text-emerald-900">Using our secure portal instead of an appointment?</h2>
+          <h2 className="text-lg font-semibold text-emerald-900">Using our secure portal?</h2>
           <p className="text-emerald-900">
             Take clear photos or scans of each document and upload them in the TaxSlayer portal once you receive your invitation.
-            Please don't email or text your documents to us.
+            Keep your photo ID handy for your quick Zoom or Google Meet ID appointment. Please don't email or text your documents to us.
           </p>
         </div>
       )}

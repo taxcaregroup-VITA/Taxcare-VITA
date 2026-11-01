@@ -114,7 +114,8 @@ export default function FinishStep({ formData, onEdit }) {
             <ol className="list-decimal ml-6 space-y-1">
               <li>A volunteer reviews your intake, usually within one business day.</li>
               <li>You'll get an invitation to our secure TaxSlayer portal. Create your login and sign Form 14446, the IRS virtual consent form.</li>
-              <li>Upload your documents in the portal. We'll do a short video call to confirm your identity.</li>
+              <li>Upload your documents in the portal.</li>
+              <li>We'll send you a Zoom or Google Meet link for your quick ID appointment, at a time you choose. Have your photo ID ready.</li>
               <li>A volunteer calls you to go over your answers, prepares your return, and a second volunteer reviews it.</li>
               <li>You review and sign your return in the portal, and we e-file it.</li>
             </ol>
@@ -184,14 +185,14 @@ export default function FinishStep({ formData, onEdit }) {
                 value={service}
                 onChange={setService}
                 options={[
-                  ["appointment", "Schedule an appointment with a volunteer"],
-                  ["portal", "No appointment: upload my documents and sign online through our secure portal"],
+                  ["appointment", "Full appointment: meet with a volunteer who goes over everything with you"],
+                  ["portal", "Quick ID appointment, then online: a short Zoom or Google Meet call to verify your ID; you upload documents and sign through our secure portal"],
                 ]}
               />
               {service === "portal" && (
                 <p className="text-sm text-gray-600 mt-3">
-                  You'll still speak with a volunteer by phone, and do a short video call to confirm your identity
-                  {formData.personal?.maritalStatus === "married" ? " (both spouses, if filing jointly)" : ""}. There's just no appointment to wait for.
+                  You'll pick a time for a short video call to confirm your identity
+                  {formData.personal?.maritalStatus === "married" ? " (both spouses, if filing jointly)" : ""}. A volunteer will also go over your answers with you. Everything else happens in the portal, on your schedule.
                 </p>
               )}
             </div>

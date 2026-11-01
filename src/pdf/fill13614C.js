@@ -315,7 +315,7 @@ async function appendStaffSummary(pdf, { reference, submittedAt, scope, name, se
   line(`Reference: ${reference}`);
   line(`Taxpayer: ${name || "(not provided)"}`);
   line(`Submitted: ${submittedAt}`);
-  line(`Service requested: ${service === "portal" ? "No appointment (TaxSlayer Customer Portal)" : "Appointment with a volunteer"}`, { f: bold });
+  line(`Service requested: ${service === "portal" ? "Quick ID appointment + portal (TaxSlayer Customer Portal)" : "Full appointment with a volunteer"}`, { f: bold });
   line(`Rules: ${scope.rulesVersion}`, { size: 9, color: rgb(0.35, 0.35, 0.35) });
   y -= 8;
   line(`Result: ${label}`, { size: 13, f: bold, color: scope.status === "out" ? rgb(0.6, 0.15, 0.1) : scope.status === "review" ? rgb(0.55, 0.4, 0) : rgb(0.1, 0.4, 0.2) });
