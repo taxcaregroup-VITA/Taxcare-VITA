@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Check } from "lucide-react";
-import { PORTAL_OPTION } from "../config";
 
 const groups = [
   {
@@ -45,7 +44,7 @@ export default function Documents() {
       <div className="space-y-3">
         <h1 className="text-3xl md:text-4xl font-extrabold">What to Have Ready</h1>
         <p className="text-lg text-gray-700">
-          Gather these before {PORTAL_OPTION ? "you upload your documents or meet with a volunteer" : "your appointment"}. Having everything at once is the fastest way to get your return filed.
+          Have your photo ID and Social Security cards or ITIN letters ready for your video appointment. After the appointment, you'll upload the rest in our secure portal. Having everything at once is the fastest way to get your return filed.
         </p>
       </div>
 
@@ -65,11 +64,11 @@ export default function Documents() {
         ))}
       </div>
 
-      {PORTAL_OPTION && (
+      {(
         <div className="rounded-2xl bg-emerald-50 border border-emerald-100 p-6 space-y-2">
-          <h2 className="text-lg font-semibold text-emerald-900">Using our secure portal instead of an appointment?</h2>
+          <h2 className="text-lg font-semibold text-emerald-900">Uploading your documents</h2>
           <p className="text-emerald-900">
-            Take clear photos or scans of each document and upload them in the TaxSlayer portal once you receive your invitation.
+            After your appointment, take clear photos or scans of each document and upload them in the TaxSlayer portal.
             Please don't email or text your documents to us.
           </p>
         </div>

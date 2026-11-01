@@ -15,9 +15,9 @@ export default function Layout({ children }) {
   return (
     <div className="min-h-screen flex flex-col bg-white text-gray-900">
       <header className="sticky top-0 z-50 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-24 md:h-32 flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-3 font-bold text-lg text-gray-900">
-            <img src="/taxcare-seal.svg" alt="" className="h-12 w-12" width="48" height="48" />
+            <img src="/taxcare-logo.svg" alt="" className="h-20 w-20 md:h-28 md:w-28" width="112" height="112" />
             <span>Taxcare Group</span>
           </Link>
 
@@ -74,7 +74,7 @@ export default function Layout({ children }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 grid gap-8 md:grid-cols-3">
           <div className="space-y-3">
             <div className="flex items-center gap-3 font-bold text-lg">
-              <img src="/taxcare-seal.svg" alt="" className="h-10 w-10" width="40" height="40" />
+              <img src="/taxcare-logo.svg" alt="" className="h-40 w-40" width="160" height="160" />
               Taxcare Group
             </div>
             <p className="text-sm text-emerald-100/80 max-w-xs">
@@ -83,7 +83,7 @@ export default function Layout({ children }) {
           </div>
           <nav className="space-y-2 text-sm" aria-label="Footer">
             <p className="font-semibold text-white">Explore</p>
-            {[...navItems, { name: "Get Started", to: "/get-started" }, { name: "What to Have Ready", to: "/documents" }, { name: "Your Rights", to: "/rights" }, { name: "Privacy Policy", to: "/privacy" }].map((item) => (
+            {[...navItems, { name: "Get Started", to: "/get-started" }, { name: "What to Have Ready", to: "/documents" }, { name: "Book an Appointment", to: "/schedule" }, { name: "Your Rights", to: "/rights" }, { name: "Privacy Policy", to: "/privacy" }].map((item) => (
               <Link key={item.to} to={item.to} className="block text-emerald-100/80 hover:text-white">
                 {item.name}
               </Link>

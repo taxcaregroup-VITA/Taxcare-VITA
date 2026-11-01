@@ -1,10 +1,10 @@
 // Last step: scope result, send TaxCare's copy, and give the taxpayer their own 13614-C.
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { screenScope } from "../../data/scope";
-import { PORTAL_OPTION } from "../../config";
-import { Choice } from "./fields";
+import { bookingUrl } from "../../config";
 // The PDF library is large, so it loads only when a form is actually generated.
 const loadFiller = () => import("../../pdf/fill13614C").then((m) => m.fill13614C);
+const load14446 = () => import("../../pdf/fill14446").then((m) => m.fill14446);
 
 const LOCATOR = "https://freetaxassistance.for.irs.gov/s/sitelocator";
 
@@ -33,9 +33,28 @@ export default function FinishStep({ formData, onEdit }) {
   const [agree, setAgree] = useState(false);
   const [state, setState] = useState({ phase: "idle" }); // idle | sending | sent | error
   const [downloading, setDownloading] = useState(false);
-  const [service, setService] = useState(PORTAL_OPTION ? "" : "appointment"); // appointment | portal
+  const [downloading14446, setDownloading14446] = useState(false);
   const p = formData.personal || {};
   const name = [p.firstName, p.lastName].filter(Boolean).join(" ");
+
+  // Out of scope: tell staff that a screening happened and why, with no personal details.
+  // Sent once per browser session for the same set of reasons, so going back and forth doesn't repeat it.
+  const outIds = scope.status === "out" ? scope.hits.filter((h) => h.level === "out").map((h) => h.id).sort() : [];
+  const outKey = outIds.join(",");
+  useEffect(() => {
+    if (!outKey) return;
+    const flag = `tc-screened:${outKey}`;
+    try {
+      if (sessionStorage.getItem(flag)) return;
+      sessionStorage.setItem(flag, "1");
+    } catch {}
+    fetch("/api/screened", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ reasons: outKey.split(","), website: "" }),
+      keepalive: true,
+    }).catch(() => {});
+  }, [outKey]);
 
   const download = async () => {
     setDownloading(true);
@@ -50,17 +69,30 @@ export default function FinishStep({ formData, onEdit }) {
     }
   };
 
+  const download14446 = async () => {
+    setDownloading14446(true);
+    try {
+      const fill14446 = await load14446();
+      const bytes = await fill14446(formData);
+      saveFile(bytes, `Form-14446-${(p.lastName || "consent").replace(/[^a-z0-9]/gi, "")}.pdf`);
+    } catch (e) {
+      alert("Sorry, we couldn't create your form. Please try again.");
+    } finally {
+      setDownloading14446(false);
+    }
+  };
+
   const submit = async () => {
     setState({ phase: "sending" });
     try {
       const submittedAt = new Date().toISOString();
       const reference = newReference();
       const fill13614C = await loadFiller();
-      const staffPdf = await fill13614C(formData, { staffSummary: { reference, submittedAt, scope, name, service } });
+      const staffPdf = await fill13614C(formData, { staffSummary: { reference, submittedAt, scope, name } });
       const body = new FormData();
       body.append("pdf", new Blob([staffPdf], { type: "application/pdf" }), "13614-C.pdf");
       body.append("reference", reference);
-      body.append("summary", JSON.stringify({ reference, submittedAt, scope, service, formData }));
+      body.append("summary", JSON.stringify({ reference, submittedAt, scope, formData }));
       body.append("website", ""); // spam trap; real visitors never fill this
       const res = await fetch("/api/submit", { method: "POST", body });
       const json = await res.json().catch(() => ({}));
@@ -82,6 +114,30 @@ export default function FinishStep({ formData, onEdit }) {
     </button>
   );
 
+  const download14446Button = (
+    <button
+      type="button"
+      onClick={download14446}
+      disabled={downloading14446}
+      className="px-6 py-3 rounded-lg border border-emerald-600 text-emerald-800 font-semibold hover:bg-emerald-50 disabled:opacity-50"
+    >
+      {downloading14446 ? "Preparing your form…" : "Download my Form 14446"}
+    </button>
+  );
+
+  const bookLink = state.phase === "sent" ? bookingUrl(state.reference) : "";
+  const bookButton = bookLink ? (
+    <a
+      href={bookLink}
+      target="_blank"
+      rel="noreferrer"
+      className="inline-flex px-6 py-3 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700"
+    >
+      Book my appointment
+    </a>
+  ) : null;
+  const joint = p.maritalStatus === "married";
+
   if (state.phase === "sent") {
     return (
       <div className="space-y-6">
@@ -89,28 +145,38 @@ export default function FinishStep({ formData, onEdit }) {
         <p className="text-gray-700">
           Your reference number is <strong className="font-mono">{state.reference}</strong>. Please keep it for your records.
         </p>
-        {service === "portal" ? (
-          <div className="space-y-3 text-gray-700">
-            <p><strong>What happens next:</strong></p>
-            <ol className="list-decimal ml-6 space-y-1">
-              <li>A volunteer reviews your intake, usually within one business day.</li>
-              <li>You'll get an invitation to our secure TaxSlayer portal. Create your login and sign Form 14446, the IRS virtual consent form.</li>
-              <li>Upload your documents in the portal. We'll do a short video call to confirm your identity.</li>
-              <li>A volunteer calls you to go over your answers, prepares your return, and a second volunteer reviews it.</li>
-              <li>You review and sign your return in the portal, and we e-file it.</li>
-            </ol>
-            <p>
-              See <a href="/documents" className="underline text-emerald-800">what to have ready</a> so you can upload everything at once.
-            </p>
-          </div>
-        ) : (
-          <p className="text-gray-700">
-            A TaxCare Group volunteer will contact you to schedule your appointment. Please see <a href="/documents" className="underline text-emerald-800">what to bring</a>.
+        <div className="space-y-3 text-gray-700">
+          <p><strong>What happens next:</strong></p>
+          <ol className="list-decimal ml-6 space-y-2">
+            <li>
+              {bookButton
+                ? "Book your 30-minute video appointment (Zoom or Google Meet) with the button below. Your reference number is filled in for you."
+                : "A volunteer will contact you, usually within one business day, to schedule your 30-minute video appointment (Zoom or Google Meet)."}
+            </li>
+            <li>
+              At your appointment, a volunteer confirms your identity, goes over your answers, and explains Form 14446, the IRS consent form for
+              virtual tax help. Have your photo ID and the Social Security cards or ITIN letters for everyone on your return
+              ready{joint ? ". If you're filing jointly, both spouses need to attend" : ""}.
+            </li>
+            <li>
+              After your appointment, we'll email you an invitation to our secure TaxSlayer portal. Create your login, sign Form 14446
+              {joint ? " (both spouses)" : ""}, and upload your tax documents.
+            </li>
+            <li>A volunteer prepares your return, and a second volunteer reviews it.</li>
+            <li>You review and sign your return in the portal, and we e-file it.</li>
+          </ol>
+          <p>
+            See <a href="/documents" className="underline text-emerald-800">what to have ready</a>.
           </p>
-        )}
-        <p className="text-gray-700">Download a copy of your completed Form 13614-C for your records.</p>
+        </div>
+        <p className="text-gray-700">
+          Download your completed Form 13614-C for your records, and your Form 14446 to read before your appointment. We've filled in Form
+          14446 for you; you'll sign it in the portal, so there's nothing to print or send back.
+        </p>
         <div className="flex flex-wrap gap-3">
+          {bookButton}
           {downloadButton}
+          {download14446Button}
           <a href="/" className="px-6 py-3 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
             Back to Home
           </a>
@@ -137,7 +203,7 @@ export default function FinishStep({ formData, onEdit }) {
             <a href={LOCATOR} target="_blank" rel="noreferrer" className="underline font-semibold text-amber-900">IRS free tax help locator</a>.
             If you think an answer was a mistake, you can go back and change it, or <a href="/contact" className="underline font-semibold text-amber-900">contact us</a>.
           </p>
-          <p className="text-sm text-amber-900">Your answers have not been sent to anyone. You can still download your completed form below to take to another site.</p>
+          <p className="text-sm text-amber-900">Your name and answers have not been sent to anyone. You can still download your completed form below to take to another site.</p>
           <div className="flex flex-wrap gap-3 pt-2">
             {downloadButton}
             <button type="button" onClick={onEdit} className="px-6 py-3 rounded-lg border font-semibold">Go back and change answers</button>
@@ -151,32 +217,16 @@ export default function FinishStep({ formData, onEdit }) {
             </h3>
             {scope.status === "review" && (
               <>
-                <p>A volunteer will review these items with you before your appointment:</p>
+                <p>A volunteer will go over these items with you at your appointment:</p>
                 <ul className="list-disc ml-6">{scope.hits.map((h) => <li key={h.id}>{h.text}</li>)}</ul>
               </>
             )}
           </div>
 
-          {PORTAL_OPTION && (
-            <div className="rounded-xl border p-5">
-              <Choice
-                name="service"
-                label="How would you like to work with us?"
-                value={service}
-                onChange={setService}
-                options={[
-                  ["appointment", "Schedule an appointment with a volunteer"],
-                  ["portal", "No appointment: upload my documents and sign online through our secure portal"],
-                ]}
-              />
-              {service === "portal" && (
-                <p className="text-sm text-gray-600 mt-3">
-                  You'll still speak with a volunteer by phone, and do a short video call to confirm your identity
-                  {formData.personal?.maritalStatus === "married" ? " (both spouses, if filing jointly)" : ""}. There's just no appointment to wait for.
-                </p>
-              )}
-            </div>
-          )}
+          <p className="text-gray-700">
+            Next, you'll book a 30-minute video appointment where a volunteer confirms your identity, goes over your answers, and explains
+            the IRS consent form for virtual help (Form 14446). After that, you sign the form and upload your documents in our secure portal.
+          </p>
 
           <div className="space-y-4">
             <label className="flex items-start gap-3">
@@ -198,7 +248,7 @@ export default function FinishStep({ formData, onEdit }) {
               <button
                 type="button"
                 onClick={submit}
-                disabled={!agree || !service || state.phase === "sending"}
+                disabled={!agree || state.phase === "sending"}
                 className="px-6 py-3 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {state.phase === "sending" ? "Sending…" : "Submit my intake"}

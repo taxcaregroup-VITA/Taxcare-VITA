@@ -6,6 +6,7 @@
 //   13614-C.pdf   – filled Form 13614-C plus a TaxCare-only scope screening cover sheet
 //   summary.json  – the answers and the scope screening result
 import { put } from "@vercel/blob";
+import { sendAlert, intakeAlert } from "./_notify.js";
 
 const MAX_PDF_BYTES = 3.5 * 1024 * 1024;
 const MAX_SUMMARY_BYTES = 200 * 1024;
@@ -58,6 +59,10 @@ export async function POST(request) {
     console.error("Intake storage failed", reference, e?.message);
     return fail(500, "Could not save intake");
   }
+
+  // Staff alert with no personal details. A failed email never fails the submission.
+  const alert = intakeAlert({ reference, scope: summary.scope, folder });
+  await sendAlert(alert.subject, alert.text);
 
   return Response.json({ reference });
 }

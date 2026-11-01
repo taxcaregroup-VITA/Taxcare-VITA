@@ -11,3 +11,14 @@ export const CIVIL_RIGHTS = {
   email: "edi.civil.rights.division@irs.gov",
   address: "Room 2413, 1111 Constitution Ave., NW, Washington, DC 20224",
 };
+
+// Site details printed on Form 14446 (Virtual VITA/TCE Taxpayer Consent), page 1.
+// Fill in the blanks once they're final; anything left "" stays blank on the form.
+export const SITE_14446 = {
+  name: "The TaxCare Group, Inc.",
+  address: "100% virtual site, Union City, GA", // street, city, state, ZIP
+  sidn: "", // Site Identification Number from the SPEC territory office
+  coordinator: "",
+  contactName: "",
+  contactPhone: "",
+};

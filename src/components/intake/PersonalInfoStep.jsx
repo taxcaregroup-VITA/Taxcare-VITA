@@ -87,7 +87,12 @@ export default function PersonalInfoStep({ formData, setFormData }) {
       </Section>
 
       <Section title="About your situation in 2026">
-        <YesNo name="claimedByOther" label="Can anyone else claim you or your spouse on their tax return?" value={p.claimedByOther} onChange={(v) => update("claimedByOther", v)} />
+        <YesNo
+          name="claimedByOther"
+          label={married ? "Can anyone else claim you or your spouse on their tax return?" : "Can anyone else (such as a parent or relative) claim you on their tax return?"}
+          value={p.claimedByOther}
+          onChange={(v) => update("claimedByOther", v)}
+        />
         <div>
           <YesNo name="twoStates" label="Did you live in two or more states in 2026?" value={p.twoStates} onChange={(v) => update("twoStates", v)} />
           <ScopeNote formData={formData} ids={["twoStates"]} />

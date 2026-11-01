@@ -1,7 +1,16 @@
-// Site-wide switches.
+// Site-wide settings.
 
-// "No appointment" option (TaxSlayer Customer Portal, 100% virtual process).
-// The IRS SPEC territory manager must approve the site's virtual process (Forms 15272 and 13715).
-// If it is not approved, set this to false: the choice disappears and every intake is treated as
-// an appointment request. Nothing else needs to change.
-export const PORTAL_OPTION = true;
+// Calendly link for the 30-minute virtual appointment (Zoom or Google Meet), for example
+// "https://calendly.com/taxcaregroup/appointment". While it's empty, the "Book" buttons are hidden and the
+// confirmation says a volunteer will contact the taxpayer to schedule.
+// On the Calendly event, make the FIRST custom question "TaxCare reference number": the site fills it in
+// automatically (Calendly's a1 field). Only the reference number goes in the link; no name or contact details.
+export const BOOKING_URL = "https://calendly.com/taxcaregroup-info/30min";
+
+// The Calendly link with the reference number pre-filled ("" when no link is set).
+export function bookingUrl(reference) {
+  if (!BOOKING_URL) return "";
+  const u = new URL(BOOKING_URL);
+  if (reference) u.searchParams.set("a1", reference);
+  return u.toString();
+}
