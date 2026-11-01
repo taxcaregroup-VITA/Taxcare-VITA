@@ -4,6 +4,7 @@ import { screenScope } from "../../data/scope";
 import { bookingUrl } from "../../config";
 // The PDF library is large, so it loads only when a form is actually generated.
 const loadFiller = () => import("../../pdf/fill13614C").then((m) => m.fill13614C);
+const load14446 = () => import("../../pdf/fill14446").then((m) => m.fill14446);
 
 const LOCATOR = "https://freetaxassistance.for.irs.gov/s/sitelocator";
 
@@ -32,6 +33,7 @@ export default function FinishStep({ formData, onEdit }) {
   const [agree, setAgree] = useState(false);
   const [state, setState] = useState({ phase: "idle" }); // idle | sending | sent | error
   const [downloading, setDownloading] = useState(false);
+  const [downloading14446, setDownloading14446] = useState(false);
   const p = formData.personal || {};
   const name = [p.firstName, p.lastName].filter(Boolean).join(" ");
 
@@ -67,6 +69,19 @@ export default function FinishStep({ formData, onEdit }) {
     }
   };
 
+  const download14446 = async () => {
+    setDownloading14446(true);
+    try {
+      const fill14446 = await load14446();
+      const bytes = await fill14446(formData);
+      saveFile(bytes, `Form-14446-${(p.lastName || "consent").replace(/[^a-z0-9]/gi, "")}.pdf`);
+    } catch (e) {
+      alert("Sorry, we couldn't create your form. Please try again.");
+    } finally {
+      setDownloading14446(false);
+    }
+  };
+
   const submit = async () => {
     setState({ phase: "sending" });
     try {
@@ -99,6 +114,17 @@ export default function FinishStep({ formData, onEdit }) {
     </button>
   );
 
+  const download14446Button = (
+    <button
+      type="button"
+      onClick={download14446}
+      disabled={downloading14446}
+      className="px-6 py-3 rounded-lg border border-emerald-600 text-emerald-800 font-semibold hover:bg-emerald-50 disabled:opacity-50"
+    >
+      {downloading14446 ? "Preparing your form…" : "Download my Form 14446"}
+    </button>
+  );
+
   const bookLink = state.phase === "sent" ? bookingUrl(state.reference) : "";
   const bookButton = bookLink ? (
     <a
@@ -127,12 +153,15 @@ export default function FinishStep({ formData, onEdit }) {
                 ? "Book your 30-minute video appointment (Zoom or Google Meet) with the button below. Your reference number is filled in for you."
                 : "A volunteer will contact you, usually within one business day, to schedule your 30-minute video appointment (Zoom or Google Meet)."}
             </li>
-            <li>Before your appointment, you'll get an invitation to our secure TaxSlayer portal. Create your login and sign Form 14446, the IRS virtual consent form.</li>
             <li>
-              At your appointment, a volunteer confirms your identity and goes over your answers with you. Have your photo ID and the Social Security
-              cards or ITIN letters for everyone on your return ready{joint ? ". If you're filing jointly, both spouses need to attend" : ""}.
+              At your appointment, a volunteer confirms your identity, goes over your answers, and explains Form 14446, the IRS consent form for
+              virtual tax help. Have your photo ID and the Social Security cards or ITIN letters for everyone on your return
+              ready{joint ? ". If you're filing jointly, both spouses need to attend" : ""}.
             </li>
-            <li>After your appointment, upload your tax documents in the portal.</li>
+            <li>
+              After your appointment, we'll email you an invitation to our secure TaxSlayer portal. Create your login, sign Form 14446
+              {joint ? " (both spouses)" : ""}, and upload your tax documents.
+            </li>
             <li>A volunteer prepares your return, and a second volunteer reviews it.</li>
             <li>You review and sign your return in the portal, and we e-file it.</li>
           </ol>
@@ -140,10 +169,14 @@ export default function FinishStep({ formData, onEdit }) {
             See <a href="/documents" className="underline text-emerald-800">what to have ready</a>.
           </p>
         </div>
-        <p className="text-gray-700">Download a copy of your completed Form 13614-C for your records.</p>
+        <p className="text-gray-700">
+          Download your completed Form 13614-C for your records, and your Form 14446 to read before your appointment. We've filled in Form
+          14446 for you; you'll sign it in the portal, so there's nothing to print or send back.
+        </p>
         <div className="flex flex-wrap gap-3">
           {bookButton}
           {downloadButton}
+          {download14446Button}
           <a href="/" className="px-6 py-3 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
             Back to Home
           </a>
@@ -191,8 +224,8 @@ export default function FinishStep({ formData, onEdit }) {
           </div>
 
           <p className="text-gray-700">
-            Next, you'll book a 30-minute video appointment where a volunteer confirms your identity and goes over your answers. After that,
-            you upload your documents and sign through our secure portal.
+            Next, you'll book a 30-minute video appointment where a volunteer confirms your identity, goes over your answers, and explains
+            the IRS consent form for virtual help (Form 14446). After that, you sign the form and upload your documents in our secure portal.
           </p>
 
           <div className="space-y-4">
