@@ -16,7 +16,7 @@ export const CIVIL_RIGHTS = {
 // Fill in the blanks once they're final; anything left "" stays blank on the form.
 export const SITE_14446 = {
   name: "The TaxCare Group, Inc.",
-  address: "", // street, city, state, ZIP
+  address: "100% virtual site, Union City, GA", // street, city, state, ZIP
   sidn: "", // Site Identification Number from the SPEC territory office
   coordinator: "",
   contactName: "",
