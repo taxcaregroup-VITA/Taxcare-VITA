@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { CALENDLY, bookingUrl, PORTAL_OPTION } from "../config";
+import { BOOKING_URL, bookingUrl } from "../config";
 
 const REFERENCE = /^TC-\d{6}-[A-HJ-NP-Z2-9]{5}$/;
 
@@ -8,11 +8,6 @@ export default function Schedule() {
   const [ref, setRef] = useState("");
   const clean = ref.trim().toUpperCase();
   const valid = REFERENCE.test(clean);
-  const options = [
-    { kind: "full", label: "Book a full appointment", note: "Meet with a volunteer who goes over everything with you." },
-    ...(PORTAL_OPTION ? [{ kind: "quickId", label: "Book a quick ID appointment", note: "A short Zoom or Google Meet call to verify your ID. Everything else happens in our secure portal." }] : []),
-  ].filter((o) => CALENDLY[o.kind]);
-
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16 space-y-8">
       <div className="space-y-3">
@@ -22,7 +17,7 @@ export default function Schedule() {
         </p>
       </div>
 
-      {options.length === 0 ? (
+      {!BOOKING_URL ? (
         <p className="rounded-xl bg-gray-50 border p-5 text-gray-700">
           Online booking isn't open yet. After you complete the intake, a volunteer will contact you to schedule.
         </p>
@@ -38,21 +33,20 @@ export default function Schedule() {
             />
             {ref && !valid && <span className="block mt-1 text-sm text-amber-800">Reference numbers look like TC-261101-7KQ4M.</span>}
           </label>
-          <div className="grid gap-4">
-            {options.map((o) => (
-              <div key={o.kind} className="rounded-xl border p-5 space-y-3">
-                <p className="text-gray-700">{o.note}</p>
-                <a
-                  href={valid ? bookingUrl(o.kind, clean) : undefined}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-disabled={!valid}
-                  className={`inline-flex px-6 py-3 rounded-lg font-semibold ${valid ? "bg-emerald-600 text-white hover:bg-emerald-700" : "bg-gray-200 text-gray-500 pointer-events-none"}`}
-                >
-                  {o.label}
-                </a>
-              </div>
-            ))}
+          <div className="rounded-xl border p-5 space-y-3">
+            <p className="text-gray-700">
+              A 30-minute Zoom or Google Meet appointment. A volunteer confirms your identity and goes over your intake answers with you.
+              Have your photo ID and Social Security cards or ITIN letters ready. If you're filing jointly, both spouses need to attend.
+            </p>
+            <a
+              href={valid ? bookingUrl(clean) : undefined}
+              target="_blank"
+              rel="noreferrer"
+              aria-disabled={!valid}
+              className={`inline-flex px-6 py-3 rounded-lg font-semibold ${valid ? "bg-emerald-600 text-white hover:bg-emerald-700" : "bg-gray-200 text-gray-500 pointer-events-none"}`}
+            >
+              Book my appointment
+            </a>
           </div>
         </div>
       )}

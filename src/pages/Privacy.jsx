@@ -1,5 +1,3 @@
-import { PORTAL_OPTION } from "../config";
-
 export default function Privacy() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 space-y-8">
@@ -16,7 +14,7 @@ export default function Privacy() {
         <ul className="list-disc ml-6 space-y-2 text-gray-700">
           <li>Your answers to the online intake (IRS Form 13614-C), including names, dates of birth, contact details, household members, and types of income and expenses.</li>
           <li>Messages you send through our contact form.</li>
-          {PORTAL_OPTION && <li>If you choose our secure portal: the documents you upload and the forms you sign there.</li>}
+          <li>The documents you upload and the forms you sign in our secure portal.</li>
           <li>The online intake does not ask for Social Security numbers or bank account numbers.</li>
         </ul>
       </section>
@@ -25,7 +23,7 @@ export default function Privacy() {
         <h2 className="text-xl font-bold">How we protect it</h2>
         <ul className="list-disc ml-6 space-y-2 text-gray-700">
           <li>Intakes are sent over an encrypted connection and stored in private storage with no public link. Only authorized TaxCare Group staff can open them.</li>
-          <li>{PORTAL_OPTION ? "Documents and signatures are exchanged through the IRS-provided TaxSlayer software and its secure customer portal." : "Your return is prepared in the IRS-provided TaxSlayer software."}</li>
+          <li>Documents and signatures are exchanged through the IRS-provided TaxSlayer software and its secure customer portal. Video appointments are not recorded.</li>
           <li>Volunteers follow IRS privacy and security rules for VITA sites (IRS Publication 4299).</li>
           <li>Please don't email or text us tax documents.</li>
         </ul>

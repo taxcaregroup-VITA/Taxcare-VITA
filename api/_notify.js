@@ -35,9 +35,8 @@ export async function sendAlert(subject, text) {
 }
 
 const LABEL = { in: "In scope", review: "Needs review", out: "Out of scope" };
-const SERVICE = { portal: "Quick ID appointment + portal", appointment: "Full appointment with a volunteer" };
 
-export function intakeAlert({ reference, scope, service, folder }) {
+export function intakeAlert({ reference, scope, folder }) {
   const reasons = (scope.hits || []).map((h) => `- ${h.level === "out" ? "Out" : "Review"}: ${h.text}`);
   const subject = `New intake ${reference}: ${LABEL[scope.status]}`;
   const text = [
@@ -45,9 +44,9 @@ export function intakeAlert({ reference, scope, service, folder }) {
     ``,
     `Reference: ${reference}`,
     `Screening: ${LABEL[scope.status]}`,
-    `Service requested: ${SERVICE[service] || "Not chosen"}`,
     ...(reasons.length ? [``, `Items to check:`, ...reasons] : []),
     ``,
+    `Watch for the taxpayer's Calendly booking for this reference number.`,
     `To open it: Vercel → taxcare-groups-projects → Storage → taxcare-intakes → Browser → ${folder}`,
     ``,
     `This email has no taxpayer details by design. Please don't reply with or forward taxpayer information.`,

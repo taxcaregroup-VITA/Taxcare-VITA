@@ -1,8 +1,7 @@
 // Last step: scope result, send TaxCare's copy, and give the taxpayer their own 13614-C.
 import { useState, useEffect } from "react";
 import { screenScope } from "../../data/scope";
-import { PORTAL_OPTION, CALENDLY, bookingUrl } from "../../config";
-import { Choice } from "./fields";
+import { bookingUrl } from "../../config";
 // The PDF library is large, so it loads only when a form is actually generated.
 const loadFiller = () => import("../../pdf/fill13614C").then((m) => m.fill13614C);
 
@@ -33,7 +32,6 @@ export default function FinishStep({ formData, onEdit }) {
   const [agree, setAgree] = useState(false);
   const [state, setState] = useState({ phase: "idle" }); // idle | sending | sent | error
   const [downloading, setDownloading] = useState(false);
-  const [service, setService] = useState(PORTAL_OPTION ? "" : "appointment"); // appointment | portal
   const p = formData.personal || {};
   const name = [p.firstName, p.lastName].filter(Boolean).join(" ");
 
@@ -75,11 +73,11 @@ export default function FinishStep({ formData, onEdit }) {
       const submittedAt = new Date().toISOString();
       const reference = newReference();
       const fill13614C = await loadFiller();
-      const staffPdf = await fill13614C(formData, { staffSummary: { reference, submittedAt, scope, name, service } });
+      const staffPdf = await fill13614C(formData, { staffSummary: { reference, submittedAt, scope, name } });
       const body = new FormData();
       body.append("pdf", new Blob([staffPdf], { type: "application/pdf" }), "13614-C.pdf");
       body.append("reference", reference);
-      body.append("summary", JSON.stringify({ reference, submittedAt, scope, service, formData }));
+      body.append("summary", JSON.stringify({ reference, submittedAt, scope, formData }));
       body.append("website", ""); // spam trap; real visitors never fill this
       const res = await fetch("/api/submit", { method: "POST", body });
       const json = await res.json().catch(() => ({}));
@@ -101,8 +99,7 @@ export default function FinishStep({ formData, onEdit }) {
     </button>
   );
 
-  const bookKind = service === "portal" ? "quickId" : "full";
-  const bookLink = state.phase === "sent" ? bookingUrl(bookKind, state.reference) : "";
+  const bookLink = state.phase === "sent" ? bookingUrl(state.reference) : "";
   const bookButton = bookLink ? (
     <a
       href={bookLink}
@@ -110,9 +107,10 @@ export default function FinishStep({ formData, onEdit }) {
       rel="noreferrer"
       className="inline-flex px-6 py-3 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700"
     >
-      {bookKind === "quickId" ? "Book my quick ID appointment" : "Book my appointment"}
+      Book my appointment
     </a>
   ) : null;
+  const joint = p.maritalStatus === "married";
 
   if (state.phase === "sent") {
     return (
@@ -121,33 +119,27 @@ export default function FinishStep({ formData, onEdit }) {
         <p className="text-gray-700">
           Your reference number is <strong className="font-mono">{state.reference}</strong>. Please keep it for your records.
         </p>
-        {service === "portal" ? (
-          <div className="space-y-3 text-gray-700">
-            <p><strong>What happens next:</strong></p>
-            <ol className="list-decimal ml-6 space-y-1">
-              <li>A volunteer reviews your intake, usually within one business day.</li>
-              <li>You'll get an invitation to our secure TaxSlayer portal. Create your login and sign Form 14446, the IRS virtual consent form.</li>
-              <li>Upload your documents in the portal.</li>
-              <li>
-                {bookButton
-                  ? "Book your quick ID appointment below. You'll get a Zoom or Google Meet link. Have your photo ID ready."
-                  : "We'll send you a Zoom or Google Meet link for your quick ID appointment, at a time you choose. Have your photo ID ready."}
-              </li>
-              <li>A volunteer calls you to go over your answers, prepares your return, and a second volunteer reviews it.</li>
-              <li>You review and sign your return in the portal, and we e-file it.</li>
-            </ol>
-            <p>
-              See <a href="/documents" className="underline text-emerald-800">what to have ready</a> so you can upload everything at once.
-            </p>
-          </div>
-        ) : (
-          <p className="text-gray-700">
-            {bookButton
-              ? "Book your appointment with a volunteer using the button below. Your reference number is filled in for you."
-              : "A TaxCare Group volunteer will contact you to schedule your appointment."}{" "}
-            Please see <a href="/documents" className="underline text-emerald-800">what to have ready</a>.
+        <div className="space-y-3 text-gray-700">
+          <p><strong>What happens next:</strong></p>
+          <ol className="list-decimal ml-6 space-y-2">
+            <li>
+              {bookButton
+                ? "Book your 30-minute video appointment (Zoom or Google Meet) with the button below. Your reference number is filled in for you."
+                : "A volunteer will contact you, usually within one business day, to schedule your 30-minute video appointment (Zoom or Google Meet)."}
+            </li>
+            <li>Before your appointment, you'll get an invitation to our secure TaxSlayer portal. Create your login and sign Form 14446, the IRS virtual consent form.</li>
+            <li>
+              At your appointment, a volunteer confirms your identity and goes over your answers with you. Have your photo ID and the Social Security
+              cards or ITIN letters for everyone on your return ready{joint ? ". If you're filing jointly, both spouses need to attend" : ""}.
+            </li>
+            <li>After your appointment, upload your tax documents in the portal.</li>
+            <li>A volunteer prepares your return, and a second volunteer reviews it.</li>
+            <li>You review and sign your return in the portal, and we e-file it.</li>
+          </ol>
+          <p>
+            See <a href="/documents" className="underline text-emerald-800">what to have ready</a>.
           </p>
-        )}
+        </div>
         <p className="text-gray-700">Download a copy of your completed Form 13614-C for your records.</p>
         <div className="flex flex-wrap gap-3">
           {bookButton}
@@ -192,32 +184,16 @@ export default function FinishStep({ formData, onEdit }) {
             </h3>
             {scope.status === "review" && (
               <>
-                <p>A volunteer will review these items with you before your appointment:</p>
+                <p>A volunteer will go over these items with you at your appointment:</p>
                 <ul className="list-disc ml-6">{scope.hits.map((h) => <li key={h.id}>{h.text}</li>)}</ul>
               </>
             )}
           </div>
 
-          {PORTAL_OPTION && (
-            <div className="rounded-xl border p-5">
-              <Choice
-                name="service"
-                label="How would you like to work with us?"
-                value={service}
-                onChange={setService}
-                options={[
-                  ["appointment", "Full appointment: meet with a volunteer who goes over everything with you"],
-                  ["portal", "Quick ID appointment, then online: a short Zoom or Google Meet call to verify your ID; you upload documents and sign through our secure portal"],
-                ]}
-              />
-              {service === "portal" && (
-                <p className="text-sm text-gray-600 mt-3">
-                  You'll pick a time for a short video call to confirm your identity
-                  {formData.personal?.maritalStatus === "married" ? " (both spouses, if filing jointly)" : ""}. A volunteer will also go over your answers with you. Everything else happens in the portal, on your schedule.
-                </p>
-              )}
-            </div>
-          )}
+          <p className="text-gray-700">
+            Next, you'll book a 30-minute video appointment where a volunteer confirms your identity and goes over your answers. After that,
+            you upload your documents and sign through our secure portal.
+          </p>
 
           <div className="space-y-4">
             <label className="flex items-start gap-3">
@@ -239,7 +215,7 @@ export default function FinishStep({ formData, onEdit }) {
               <button
                 type="button"
                 onClick={submit}
-                disabled={!agree || !service || state.phase === "sending"}
+                disabled={!agree || state.phase === "sending"}
                 className="px-6 py-3 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {state.phase === "sending" ? "Sending…" : "Submit my intake"}

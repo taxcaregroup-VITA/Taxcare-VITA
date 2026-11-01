@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { INCOME_GUIDELINE, SITE_LOCATOR } from "../data/site";
-import { PORTAL_OPTION } from "../config";
 
 const faqs = [
   {
@@ -21,9 +20,7 @@ const faqs = [
   },
   {
     q: "Do I need to visit a location?",
-    a: PORTAL_OPTION
-      ? <>No. Everything is virtual. Choose a full appointment, where a volunteer goes over everything with you, or a quick ID appointment by Zoom or Google Meet, after which you upload your documents and sign through our secure portal.</>
-      : <>No. Our services are virtual: a volunteer meets with you by phone or video at a scheduled time.</>,
+    a: <>No. Everything is virtual. After the online intake, you book a 30-minute Zoom or Google Meet appointment where a volunteer confirms your identity and goes over your answers. Then you upload your documents and sign through our secure portal.</>,
   },
   {
     q: "What should I have ready?",

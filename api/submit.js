@@ -61,7 +61,7 @@ export async function POST(request) {
   }
 
   // Staff alert with no personal details. A failed email never fails the submission.
-  const alert = intakeAlert({ reference, scope: summary.scope, service: summary.service, folder });
+  const alert = intakeAlert({ reference, scope: summary.scope, folder });
   await sendAlert(alert.subject, alert.text);
 
   return Response.json({ reference });
