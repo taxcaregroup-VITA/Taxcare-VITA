@@ -1,5 +1,5 @@
 // Last step: scope result, send TaxCare's copy, and give the taxpayer their own 13614-C.
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { screenScope } from "../../data/scope";
 import { PORTAL_OPTION } from "../../config";
 import { Choice } from "./fields";
@@ -36,6 +36,25 @@ export default function FinishStep({ formData, onEdit }) {
   const [service, setService] = useState(PORTAL_OPTION ? "" : "appointment"); // appointment | portal
   const p = formData.personal || {};
   const name = [p.firstName, p.lastName].filter(Boolean).join(" ");
+
+  // Out of scope: tell staff that a screening happened and why, with no personal details.
+  // Sent once per browser session for the same set of reasons, so going back and forth doesn't repeat it.
+  const outIds = scope.status === "out" ? scope.hits.filter((h) => h.level === "out").map((h) => h.id).sort() : [];
+  const outKey = outIds.join(",");
+  useEffect(() => {
+    if (!outKey) return;
+    const flag = `tc-screened:${outKey}`;
+    try {
+      if (sessionStorage.getItem(flag)) return;
+      sessionStorage.setItem(flag, "1");
+    } catch {}
+    fetch("/api/screened", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ reasons: outKey.split(","), website: "" }),
+      keepalive: true,
+    }).catch(() => {});
+  }, [outKey]);
 
   const download = async () => {
     setDownloading(true);
@@ -137,7 +156,7 @@ export default function FinishStep({ formData, onEdit }) {
             <a href={LOCATOR} target="_blank" rel="noreferrer" className="underline font-semibold text-amber-900">IRS free tax help locator</a>.
             If you think an answer was a mistake, you can go back and change it, or <a href="/contact" className="underline font-semibold text-amber-900">contact us</a>.
           </p>
-          <p className="text-sm text-amber-900">Your answers have not been sent to anyone. You can still download your completed form below to take to another site.</p>
+          <p className="text-sm text-amber-900">Your name and answers have not been sent to anyone. You can still download your completed form below to take to another site.</p>
           <div className="flex flex-wrap gap-3 pt-2">
             {downloadButton}
             <button type="button" onClick={onEdit} className="px-6 py-3 rounded-lg border font-semibold">Go back and change answers</button>
