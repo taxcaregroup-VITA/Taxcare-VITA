@@ -18,7 +18,7 @@ export default function Layout({ children }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-24 md:h-32 flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-3 font-bold text-lg text-gray-900">
             <img src="/taxcare-logo.svg" alt="" className="h-20 w-20 md:h-28 md:w-28" width="112" height="112" />
-            <span>Taxcare Group</span>
+            <span>The TaxCare Group, Inc.</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8" aria-label="Main">
@@ -75,7 +75,7 @@ export default function Layout({ children }) {
           <div className="space-y-3">
             <div className="flex items-center gap-3 font-bold text-lg">
               <img src="/taxcare-logo.svg" alt="" className="h-40 w-40" width="160" height="160" />
-              Taxcare Group
+              The TaxCare Group, Inc.
             </div>
             <p className="text-sm text-emerald-100/80 max-w-xs">
               Free tax preparation by IRS-certified volunteers, completed securely from home.
