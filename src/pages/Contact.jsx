@@ -26,6 +26,11 @@ export default function Contact() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 space-y-6">
       <h1 className="text-3xl md:text-4xl font-extrabold">Contact Us</h1>
+      <div className="rounded-xl border border-emerald-100 bg-emerald-50 p-5 max-w-xl">
+        <h2 className="font-semibold text-emerald-900">Hours</h2>
+        <p className="text-emerald-900">Monday – Thursday, 9:00 a.m. – 6:00 p.m. Eastern Time</p>
+        <p className="text-sm text-emerald-800 mt-1">Messages sent outside these hours are answered the next business day.</p>
+      </div>
       {state === "sent" ? (
         <p role="status" className="rounded-xl bg-emerald-50 border border-emerald-100 p-5 text-emerald-900">
           Thank you. Your message was received, and a volunteer will get back to you.
