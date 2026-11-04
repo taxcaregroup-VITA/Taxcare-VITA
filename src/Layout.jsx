@@ -97,9 +97,12 @@ export default function Layout({ children }) {
           </div>
         </div>
         <div className="border-t border-emerald-900">
-          <p className="max-w-7xl mx-auto px-4 sm:px-6 py-5 text-xs text-emerald-100/70">
-            © {new Date().getFullYear()} The TaxCare Group, Inc. A Volunteer Income Tax Assistance (VITA) site.
-          </p>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 text-xs text-emerald-100/70 space-y-1">
+            <p>
+              The TaxCare Group, Inc. is a 501(c)(3) nonprofit organization registered in the United States under EIN 93-1454292.
+            </p>
+            <p>© {new Date().getFullYear()} The TaxCare Group, Inc. A Volunteer Income Tax Assistance (VITA) site.</p>
+          </div>
         </div>
       </footer>
     </div>
