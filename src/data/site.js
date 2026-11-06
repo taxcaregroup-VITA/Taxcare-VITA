@@ -15,7 +15,7 @@ export const CIVIL_RIGHTS = {
 // Site details printed on Form 14446 (Virtual VITA/TCE Taxpayer Consent), page 1.
 // Fill in the blanks once they're final; anything left "" stays blank on the form.
 export const SITE_14446 = {
-  name: "The TaxCare Group",
+  name: "The TaxCare Group - Virtual",
   address: "100% virtual site (no public location)\nUnion City, GA 30291", // street, city, state, ZIP
   sidn: "S15010003", // Site Identification Number from the SPEC territory office
   coordinator: "Djoko Ebama",
